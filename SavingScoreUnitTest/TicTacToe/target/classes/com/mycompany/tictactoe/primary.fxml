@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.tictactoe.PrimaryController" spacing="10" alignment="CENTER">
+    <Label fx:id="statusLabel" text="Player X's turn"/>
+    
+    <GridPane>
+        <columnConstraints>
+            <ColumnConstraints hgrow="ALWAYS"/>
+            <ColumnConstraints hgrow="ALWAYS"/>
+            <ColumnConstraints hgrow="ALWAYS"/>
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints vgrow="ALWAYS"/>
+            <RowConstraints vgrow="ALWAYS"/>
+            <RowConstraints vgrow="ALWAYS"/>
+        </rowConstraints>
+
+        <Button fx:id="button00" onAction="#handleButtonClick" GridPane.rowIndex="0" GridPane.columnIndex="0" prefWidth="100" prefHeight="100"/>
+        <Button fx:id="button01" onAction="#handleButtonClick" GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="100" prefHeight="100"/>
+        <Button fx:id="button02" onAction="#handleButtonClick" GridPane.rowIndex="0" GridPane.columnIndex="2" prefWidth="100" prefHeight="100"/>
+        
+        <Button fx:id="button10" onAction="#handleButtonClick" GridPane.rowIndex="1" GridPane.columnIndex="0" prefWidth="100" prefHeight="100"/>
+        <Button fx:id="button11" onAction="#handleButtonClick" GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="100" prefHeight="100"/>
+        <Button fx:id="button12" onAction="#handleButtonClick" GridPane.rowIndex="1" GridPane.columnIndex="2" prefWidth="100" prefHeight="100"/>
+        
+        <Button fx:id="button20" onAction="#handleButtonClick" GridPane.rowIndex="2" GridPane.columnIndex="0" prefWidth="100" prefHeight="100"/>
+        <Button fx:id="button21" onAction="#handleButtonClick" GridPane.rowIndex="2" GridPane.columnIndex="1" prefWidth="100" prefHeight="100"/>
+        <Button fx:id="button22" onAction="#handleButtonClick" GridPane.rowIndex="2" GridPane.columnIndex="2" prefWidth="100" prefHeight="100"/>
+    </GridPane>
+
+    <Button text="View Scores" onAction="#openScores"/>
+</VBox>
