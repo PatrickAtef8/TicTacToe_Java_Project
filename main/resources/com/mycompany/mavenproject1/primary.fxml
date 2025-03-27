@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane style="-fx-background-color: #5B2576" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.mavenproject1.PrimaryController">
+
+    <!-- Game Board and Scores -->
+    <center>
+        <HBox alignment="CENTER" style="-fx-padding: 20;"> 
+            <StackPane alignment="CENTER" minHeight="650" minWidth="650" style="-fx-background-color: #2B0B33;                                -fx-background-radius: 30;                               -fx-padding: 30;"> 
+
+                <VBox alignment="CENTER" spacing="35"> 
+                    
+                    <!-- Score Display -->
+                    <HBox alignment="CENTER" spacing="40">
+                        <!-- Player 1 Score -->
+                        <StackPane style="-fx-background-color: #33CCFF; -fx-padding: 20 40; -fx-border-radius: 20;">
+                            <VBox alignment="CENTER">
+                                <Label fx:id="player1Label" style="-fx-text-fill: white; -fx-font-size: 26px; -fx-font-weight: bold; -fx-font-family: 'Comic Sans MS';" text="Player X" />
+                                <Label fx:id="player1ScoreLabel" style="-fx-text-fill: white; -fx-font-size: 30px; -fx-font-weight: bold;" text="0" />
+                            </VBox>
+                        </StackPane>
+
+                        <!-- Draw Score -->
+                        <StackPane style="-fx-background-color: #D3D3D3; -fx-padding: 20 40; -fx-border-radius: 20;">
+                            <VBox alignment="CENTER">
+                                <Label fx:id="drawLabel" style="-fx-text-fill: black; -fx-font-size: 26px; -fx-font-weight: bold; -fx-font-family: 'Comic Sans MS';" text="Draw" />
+                                <Label fx:id="drawScoreLabel" style="-fx-text-fill: black; -fx-font-size: 30px; -fx-font-weight: bold;" text="0" />
+                            </VBox>
+                        </StackPane>
+
+                        <!-- Player 2 Score -->
+                        <StackPane style="-fx-background-color: #FFDD44; -fx-padding: 20 40; -fx-border-radius: 20;">
+                            <VBox alignment="CENTER">
+                                <Label fx:id="player2Label" style="-fx-text-fill: white; -fx-font-size: 26px; -fx-font-weight: bold; -fx-font-family: 'Comic Sans MS';" text="Player O" />
+                                <Label fx:id="player2ScoreLabel" style="-fx-text-fill: white; -fx-font-size: 30px; -fx-font-weight: bold;" text="0" />
+                            </VBox>
+                        </StackPane>
+                    </HBox>
+
+                    <!-- Game Board (Tic-Tac-Toe Grid) -->
+                    <GridPane fx:id="gameBoard" alignment="CENTER" hgap="20" minHeight="450" minWidth="450" style="-fx-padding: 25;" vgap="20">
+                        
+                    </GridPane>
+
+                </VBox>
+
+            </StackPane>
+        </HBox>
+    </center>
+
+    <!-- Bottom Section: Title and Buttons -->
+<bottom>
+    <VBox alignment="CENTER" spacing="10" style="-fx-padding: 10;">
+        
+        <!-- Tic Tac Toe Title -->
+        <StackPane alignment="CENTER_LEFT"> 
+            <VBox fx:id="titleContainer" spacing="5">
+      
+                          <!-- Buttons Section -->
+              <HBox alignment="CENTER" spacing="20" style="-fx-translate-y: -10;">  
+                  <Button fx:id="playAgainButton" text="Play Again"
+        style="-fx-background-radius: 20; 
+               -fx-border-radius: 20; 
+               -fx-font-size: 24px; 
+               -fx-font-weight: bold; 
+               -fx-text-fill: white; 
+               -fx-font-family: 'Comic Sans MS'; 
+               -fx-background-color: linear-gradient(to right, #00FF00, #66FF66); 
+               -fx-effect: dropshadow(gaussian, rgba(0,255,0,0.7), 20, 0, 0, 0); 
+               -fx-scale-x: 1.05; 
+               -fx-scale-y: 1.05; 
+               -fx-padding: 15 40;"/>
+
+<Button fx:id="finishButton" text="Finish"
+        style="-fx-background-radius: 20; 
+               -fx-border-radius: 20; 
+               -fx-font-size: 24px; 
+               -fx-font-weight: bold; 
+               -fx-text-fill: white; 
+               -fx-font-family: 'Comic Sans MS'; 
+               -fx-background-color: linear-gradient(to right, #FF3333, #FF9966); 
+               -fx-effect: dropshadow(gaussian, rgba(255,69,0,0.7), 20, 0, 0, 0); 
+               -fx-scale-x: 1.05; 
+               -fx-scale-y: 1.05; 
+               -fx-padding: 15 40;"/>
+                        
+              </HBox>
+                <Label fx:id="ticLabel" style="-fx-text-fill: yellow; -fx-font-size: 60px;                                -fx-font-weight: bold; -fx-font-family: 'Comic Sans MS';                                -fx-effect: dropshadow(gaussian, rgba(255,69,0,0.8), 10, 0, 0, 0);" text="Tic." />
+                <Label fx:id="tacLabel" style="-fx-text-fill: deepskyblue; -fx-font-size: 60px;                                -fx-font-weight: bold; -fx-font-family: 'Comic Sans MS';                                -fx-effect: dropshadow(gaussian, rgba(0,191,255,0.8), 10, 0, 0, 0);" text="Tac." />
+                <Label fx:id="toeLabel" style="-fx-text-fill: yellow; -fx-font-size: 60px;                                -fx-font-weight: bold; -fx-font-family: 'Comic Sans MS';                                -fx-effect: dropshadow(gaussian, rgba(255,215,0,0.8), 10, 0, 0, 0);" text="Toe." />
+            </VBox>
+        </StackPane>
+
+    </VBox>
+</bottom>
+
+
+</BorderPane>

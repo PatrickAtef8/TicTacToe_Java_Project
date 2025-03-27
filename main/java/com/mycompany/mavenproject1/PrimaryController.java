@@ -7,7 +7,19 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import java.io.IOException;
 import java.util.Random;
+import javafx.animation.PathTransition;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
 
 public class PrimaryController {
 
@@ -20,7 +32,10 @@ public class PrimaryController {
     @FXML
     private GridPane gameBoard;
 
-    private String currentPlayer = "X"; // Changed from emoji to "X"
+    @FXML
+    private Button playAgainButton, finishButton;
+
+    private String currentPlayer = "X";
     private Button[][] board = new Button[3][3];
     private boolean gameOver = false;
     private int player1Score = 0, player2Score = 0, drawCount = 0;
@@ -28,6 +43,8 @@ public class PrimaryController {
     public void initialize() {
         setupUI();
         createGameBoard();
+        playAgainButton.setOnAction(e -> resetGame());
+        finishButton.setOnAction(e -> switchToSecondaryScene());
     }
 
     private void setupUI() {
@@ -35,8 +52,8 @@ public class PrimaryController {
         tacLabel.setText("Tac.");
         toeLabel.setText("Toe.");
 
-        player1Label.setText("Player X"); // Changed from emoji
-        player2Label.setText("Player O"); // Changed from emoji
+        player1Label.setText("Player X");
+        player2Label.setText("Player O");
         drawLabel.setText("Draw");
 
         updateScores();
@@ -62,7 +79,7 @@ public class PrimaryController {
         if (gameOver || !cell.getText().isEmpty()) return;
 
         animateButton(cell);
-        cell.setText(currentPlayer); // Now uses "X" and "O"
+        cell.setText(currentPlayer);
 
         if (checkWinner(currentPlayer)) {
             if (currentPlayer.equals("X")) player1Score++;
@@ -82,7 +99,7 @@ public class PrimaryController {
             return;
         }
 
-        currentPlayer = currentPlayer.equals("X") ? "O" : "X"; // Switch between "X" and "O"
+        currentPlayer = currentPlayer.equals("X") ? "O" : "X";
     }
 
     private void animateButton(Button button) {
@@ -122,30 +139,48 @@ public class PrimaryController {
         return true;
     }
 
-    private void highlightWinningLine() {
-        for (int i = 0; i < 3; i++) {
-            if (checkLine(currentPlayer, board[i][0], board[i][1], board[i][2])) {
-                glowEffect(board[i][0], board[i][1], board[i][2]);
-                return;
-            }
-            if (checkLine(currentPlayer, board[0][i], board[1][i], board[2][i])) {
-                glowEffect(board[0][i], board[1][i], board[2][i]);
-                return;
-            }
+    // ✨ **Highlight Winning Line** ✨
+
+// ✨ **Highlight Winning Buttons** ✨
+private void glowEffect(Button... buttons) {
+    for (Button button : buttons) {
+        button.setStyle(button.getStyle() + "; -fx-border-color: yellow; -fx-border-width: 5;");
+    }
+}
+private void highlightWinningLine() {
+    // Check for horizontal, vertical, and diagonal wins
+    for (int i = 0; i < 3; i++) {
+        if (checkLine(currentPlayer, board[i][0], board[i][1], board[i][2])) {
+            glowEffect(board[i][0], board[i][1], board[i][2]); // Highlight buttons
+            colorWinningBoxes(board[i][0], board[i][1], board[i][2]); // Color the winning boxes
+            return;
         }
-        if (checkLine(currentPlayer, board[0][0], board[1][1], board[2][2])) {
-            glowEffect(board[0][0], board[1][1], board[2][2]);
-        } else if (checkLine(currentPlayer, board[0][2], board[1][1], board[2][0])) {
-            glowEffect(board[0][2], board[1][1], board[2][0]);
+        if (checkLine(currentPlayer, board[0][i], board[1][i], board[2][i])) {
+            glowEffect(board[0][i], board[1][i], board[2][i]);
+            colorWinningBoxes(board[0][i], board[1][i], board[2][i]);
+            return;
         }
     }
 
-    private void glowEffect(Button... buttons) {
-        for (Button button : buttons) {
-            button.setStyle(button.getStyle() + "; -fx-border-color: yellow; -fx-border-width: 5; -fx-background-color: #BB33FF;");
-        }
+    // Check for diagonal wins
+    if (checkLine(currentPlayer, board[0][0], board[1][1], board[2][2])) {
+        glowEffect(board[0][0], board[1][1], board[2][2]);
+        colorWinningBoxes(board[0][0], board[1][1], board[2][2]);
+    } else if (checkLine(currentPlayer, board[0][2], board[1][1], board[2][0])) {
+        glowEffect(board[0][2], board[1][1], board[2][0]);
+        colorWinningBoxes(board[0][2], board[1][1], board[2][0]);
     }
+}
 
+private void colorWinningBoxes(Button... buttons) {
+    for (Button button : buttons) {
+        button.setStyle(button.getStyle() + "; -fx-background-color: green;");
+    }
+}
+
+
+
+    // 🎉 **Confetti Celebration** 🎉
     private void showConfettiEffect() {
         Random random = new Random();
         for (int i = 0; i < 15; i++) {
@@ -172,7 +207,41 @@ public class PrimaryController {
         player2ScoreLabel.setText(String.valueOf(player2Score));
         drawScoreLabel.setText(String.valueOf(drawCount));
     }
+
+    private void resetGame() {
+        gameOver = false;
+        currentPlayer = "X";
+        for (Button[] row : board) {
+            for (Button cell : row) {
+                cell.setText("");
+                cell.setStyle("-fx-background-color: #AA44CC; -fx-text-fill: white; -fx-font-size: 30px; -fx-font-weight: bold;");
+            }
+        }
+    }
+
+    // 🔄 **Scene Switching to Secondary Scene**
+    private void switchToSecondaryScene() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("secondary.fxml"));
+            Parent root = loader.load();
+
+            SecondaryController secondaryController = loader.getController();
+            if (secondaryController != null) {
+                secondaryController.setPlayerData(player1Label.getText(), player2Label.getText(), player1Score, player2Score, drawCount);
+            } else {
+                System.out.println("Error: SecondaryController is null!");
+            }
+
+            Stage stage = (Stage) finishButton.getScene().getWindow();
+            stage.setScene(new Scene(root));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
+
+
 
 
 
