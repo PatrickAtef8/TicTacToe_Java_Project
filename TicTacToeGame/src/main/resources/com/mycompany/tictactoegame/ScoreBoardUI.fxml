@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" spacing="40" style="-fx-background-color: #5B2576; -fx-padding: 40px;"
+      xmlns="http://javafx.com/javafx/23.0.1" 
+      xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="com.mycompany.tictactoegame.ScoreBoardController">
+
+    <Label fx:id="winnerLabel" text="Final Score" 
+           style="-fx-text-fill: white; -fx-font-size: 60px; -fx-font-weight: bold;" />
+
+    <HBox alignment="CENTER" spacing="40">
+        
+        <StackPane style="-fx-background-color: #4FC3F7; -fx-padding: 20px; -fx-border-radius: 20px; -fx-background-radius: 20px;">
+            <VBox alignment="CENTER">
+                <Label text="PLAYER X" 
+                       style="-fx-text-fill: black; -fx-font-size: 32px; -fx-font-weight: bold;" />
+                <Label fx:id="player1ScoreLabel" text="0" 
+                       style="-fx-text-fill: black; -fx-font-size: 40px; -fx-font-weight: bold;" />
+            </VBox>
+        </StackPane>
+        
+        <StackPane style="-fx-background-color: #B3E5FC; -fx-padding: 20px; -fx-border-radius: 20px; -fx-background-radius: 20px;">
+            <VBox alignment="CENTER">
+                <Label text="DRAW" 
+                       style="-fx-text-fill: black; -fx-font-size: 32px; -fx-font-weight: bold;" />
+                <Label fx:id="drawScoreLabel" text="0" 
+                       style="-fx-text-fill: black; -fx-font-size: 40px; -fx-font-weight: bold;" />
+            </VBox>
+        </StackPane>
+        
+        <StackPane style="-fx-background-color: #FFD700; -fx-padding: 20px; -fx-border-radius: 20px; -fx-background-radius: 20px;">
+            <VBox alignment="CENTER">
+                <Label text="PLAYER O" 
+                       style="-fx-text-fill: black; -fx-font-size: 32px; -fx-font-weight: bold;" />
+                <Label fx:id="player2ScoreLabel" text="0" 
+                       style="-fx-text-fill: black; -fx-font-size: 40px; -fx-font-weight: bold;" />
+            </VBox>
+        </StackPane>
+        
+    </HBox>
+
+    <Label text="Would you like to play again?" 
+           style="-fx-text-fill: white; -fx-font-size: 36px; -fx-font-weight: bold;" />
+
+    <HBox alignment="CENTER" spacing="40">
+        <Button fx:id="yesButton" text="Yes" onAction="#switchToPrimaryScene"
+                style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 28px; -fx-font-weight: bold; -fx-padding: 20px 40px; -fx-background-radius: 20px; -fx-border-radius: 20px;" />
+        
+        <Button fx:id="noButton" text="No" onAction="#exitApplication"
+                style="-fx-background-color: #D32F2F; -fx-text-fill: white; -fx-font-size: 28px; -fx-font-weight: bold; -fx-padding: 20px 40px; -fx-background-radius: 20px; -fx-border-radius: 20px;" />
+    </HBox>
+
+</VBox>
