@@ -33,10 +33,16 @@ public class GameBoardController {
     private static int playerOScore = 0;
     private static int drawScore = 0;
 
+    
+    private String playerXName = "Player X";
+    private String playerOName = "Player O"; 
+
     private String currentPlayer = "X";
     private Button[][] board = new Button[3][3];
     private boolean gameOver = false;
     private TranslateTransition winnerAnimation; // Store the animation so we can stop it
+    @FXML
+    private Button backbutton;
 
     public void initialize() {
         setupUI();
@@ -44,15 +50,23 @@ public class GameBoardController {
         playAgainButton.setOnAction(e -> resetGame());
         finishButton.setOnAction(e -> switchToSecondaryScene());
     }
+   
+   public void setPlayerNames(String playerX, String playerO) {
+    player1Label.setText(playerX);
+    player2Label.setText(playerO);
+    this.playerXName = playerX;
+    this.playerOName = playerO;
+}
 
-    private void setupUI() {
-        ticLabel.setText("Tic.");
-        tacLabel.setText("Tac.");
-        toeLabel.setText("Toe.");
-        player1Label.setText("Player X");
-        player2Label.setText("Player O");
-        winnerLabel.setVisible(false);
-    }
+
+private void setupUI() {
+    ticLabel.setText("Tic.");
+    tacLabel.setText("Tac.");
+    toeLabel.setText("Toe.");
+    player1Label.setText(playerXName);
+    player2Label.setText(playerOName);
+    winnerLabel.setVisible(false);
+}
 
     private void createGameBoard() {
         for (int row = 0; row < 3; row++) {
@@ -246,9 +260,20 @@ private void resetGame() {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("ScoreBoardUI.fxml"));
             Parent newRoot = loader.load();
             ScoreBoardController scoreController = loader.getController();
-            scoreController.setPlayerData("Player X", "Player O", playerXScore, playerOScore, drawScore);
-            
+        scoreController.setPlayerData(playerXName, playerOName, playerXScore, playerOScore, drawScore);            
             Stage stage = (Stage) finishButton.getScene().getWindow();
+            stage.setScene(new Scene(newRoot));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+      @FXML
+    private void switchToPlayerNameScene() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("PlayerName.fxml"));
+            Parent newRoot = loader.load();
+            Stage stage = (Stage) backbutton.getScene().getWindow();
             stage.setScene(new Scene(newRoot));
         } catch (IOException e) {
             e.printStackTrace();

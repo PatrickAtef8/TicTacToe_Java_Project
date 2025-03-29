@@ -26,25 +26,36 @@ public class ScoreBoardController {
     @FXML
     private Button yesButton, noButton;
 
-    public void setPlayerData(String player1, String player2, int player1Score, int player2Score, int drawCount) {
-        player1ScoreLabel.setText("" + player1Score);
-        player2ScoreLabel.setText("" + player2Score);
-        drawScoreLabel.setText("" + drawCount);
+    
+    private String player1Name;
+    private String player2Name;
 
-        if (player1Score > player2Score) {
-            winnerLabel.setText(player1 + " is Winning!");
-        } else if (player2Score > player1Score) {
-            winnerLabel.setText(player2 + " is Winning!");
-        } else {
-            winnerLabel.setText("It's a Tie!");
-        }
+ public void setPlayerData(String player1, String player2, int player1Score, int player2Score, int drawCount) {
+    player1ScoreLabel.setText(player1 + ": " + player1Score); // Name + Score
+    player2ScoreLabel.setText(player2 + ": " + player2Score); // Name + Score
+    drawScoreLabel.setText("Draws" + ": " + drawCount);
+
+    
+        this.player1Name = player1; 
+        this.player2Name = player2;
+
+    if (player1Score > player2Score) {
+        winnerLabel.setText(player1 + " is Winning! 🏆");
+    } else if (player2Score > player1Score) {
+        winnerLabel.setText(player2 + " is Winning! 🏆");
+    } else {
+        winnerLabel.setText("It's a Tie! 🤝");
     }
+}
+
 
     @FXML
     private void switchToPrimaryScene() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("GameBoardUI.fxml"));
             Parent root = loader.load();
+              GameBoardController gameController = loader.getController();
+              gameController.setPlayerNames(player1Name, player2Name); 
             Stage stage = (Stage) yesButton.getScene().getWindow();
             Scene scene = new Scene(root);
 
