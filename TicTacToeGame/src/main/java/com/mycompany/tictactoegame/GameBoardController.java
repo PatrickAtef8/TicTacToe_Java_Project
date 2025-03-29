@@ -8,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -30,6 +29,9 @@ public class GameBoardController {
     @FXML
     private VBox titleContainer;
     
+        private static int playerXScore = 0;
+    private static int playerOScore = 0;
+    private static int drawScore = 0;
 
     private String currentPlayer = "X";
     private Button[][] board = new Button[3][3];
@@ -68,7 +70,7 @@ public class GameBoardController {
         }
     }
 
-    private void handleCellClick(Button cell, int row, int col) {
+     private void handleCellClick(Button cell, int row, int col) {
         if (gameOver || !cell.getText().isEmpty()) return;
 
         animateButton(cell);
@@ -79,12 +81,19 @@ public class GameBoardController {
             highlightWinningLine();
             showWinnerLabel();
             showConfettiEffect();
+            
+            if (currentPlayer.equals("X")) {
+                playerXScore++;
+            } else {
+                playerOScore++;
+            }
             return;
         }
 
         if (isBoardFull()) {
             gameOver = true;
             showDrawMessage();
+            drawScore++;
             return;
         }
 
@@ -230,15 +239,20 @@ private void resetGame() {
 }
 
 
+ 
     @FXML
     private void switchToSecondaryScene() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("ScoreBoardUI.fxml"));
             Parent newRoot = loader.load();
+            ScoreBoardController scoreController = loader.getController();
+            scoreController.setPlayerData("Player X", "Player O", playerXScore, playerOScore, drawScore);
+            
             Stage stage = (Stage) finishButton.getScene().getWindow();
             stage.setScene(new Scene(newRoot));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 }

@@ -1,7 +1,6 @@
 package com.mycompany.tictactoegame;
 
 import java.io.IOException;
-import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,7 +8,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 public class ScoreBoardController {
 
@@ -29,16 +27,16 @@ public class ScoreBoardController {
     private Button yesButton, noButton;
 
     public void setPlayerData(String player1, String player2, int player1Score, int player2Score, int drawCount) {
-        player1ScoreLabel.setText(String.valueOf(player1Score));
-        player2ScoreLabel.setText(String.valueOf(player2Score));
-        drawScoreLabel.setText(String.valueOf(drawCount));
+        player1ScoreLabel.setText("" + player1Score);
+        player2ScoreLabel.setText("" + player2Score);
+        drawScoreLabel.setText("Draws: " + drawCount);
 
         if (player1Score > player2Score) {
-            winnerLabel.setText(player1 + " Wins!");
+            winnerLabel.setText(player1 + " is Winning!");
         } else if (player2Score > player1Score) {
-            winnerLabel.setText(player2 + " Wins!");
+            winnerLabel.setText(player2 + " is Winning!");
         } else {
-            winnerLabel.setText("It's a Draw!");
+            winnerLabel.setText("It's a Tie!");
         }
     }
 
