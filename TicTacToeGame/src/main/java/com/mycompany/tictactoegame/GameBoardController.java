@@ -11,62 +11,56 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class GameBoardController {
-
+public class GameBoardController 
+{
     @FXML
     private Label ticLabel, tacLabel, toeLabel, player1Label, player2Label, winnerLabel;
-
     @FXML
     private GridPane gameBoard;
-
     @FXML
-    private Button playAgainButton, finishButton;
-
-    @FXML
-    private VBox titleContainer;
-    
-        private static int playerXScore = 0;
-    private static int playerOScore = 0;
-    private static int drawScore = 0;
-
-    
+    private Button playAgainButton, finishButton, backbutton;
     private String playerXName = "Player X";
     private String playerOName = "Player O"; 
 
-    private String currentPlayer = "X";
+    private GameLogic game;
     private Button[][] board = new Button[3][3];
-    private boolean gameOver = false;
-    private TranslateTransition winnerAnimation; // Store the animation so we can stop it
-    @FXML
-    private Button backbutton;
+    private TranslateTransition winnerAnimation;
+    private String gameMode;
+    private String difficultyLevel;
+
 
     public void initialize() {
+        game = new GameLogic();
         setupUI();
         createGameBoard();
         playAgainButton.setOnAction(e -> resetGame());
         finishButton.setOnAction(e -> switchToSecondaryScene());
     }
-   
-   public void setPlayerNames(String playerX, String playerO) {
+    
+
+   public void setGameSettings(String playerX, String playerO, String mode, String difficulty) {
     player1Label.setText(playerX);
     player2Label.setText(playerO);
     this.playerXName = playerX;
     this.playerOName = playerO;
+    this.gameMode = mode;
+    this.difficultyLevel = difficulty;
+
+    System.out.println("Game Mode: " + mode + ", Difficulty: " + difficulty);
 }
 
 
-private void setupUI() {
-    ticLabel.setText("Tic.");
-    tacLabel.setText("Tac.");
-    toeLabel.setText("Toe.");
-    player1Label.setText(playerXName);
+    private void setupUI() {
+        ticLabel.setText("Tic.");
+        tacLabel.setText("Tac.");
+        toeLabel.setText("Toe.");
+        winnerLabel.setVisible(false);
+        player1Label.setText(playerXName);
     player2Label.setText(playerOName);
-    winnerLabel.setVisible(false);
-}
+    }
 
     private void createGameBoard() {
         for (int row = 0; row < 3; row++) {
@@ -84,35 +78,53 @@ private void setupUI() {
         }
     }
 
-     private void handleCellClick(Button cell, int row, int col) {
-        if (gameOver || !cell.getText().isEmpty()) return;
+private void handleCellClick(Button cell, int row, int col) {
+    if (game.isGameOver() || !cell.getText().isEmpty()) return;
 
-        animateButton(cell);
-        cell.setText(currentPlayer);
+    animateButton(cell);
+    cell.setText(game.getCurrentPlayer());
 
-        if (checkWinner(currentPlayer)) {
-            gameOver = true;
-            highlightWinningLine();
-            showWinnerLabel();
-            showConfettiEffect();
-            
-            if (currentPlayer.equals("X")) {
-                playerXScore++;
-            } else {
-                playerOScore++;
-            }
-            return;
-        }
-
-        if (isBoardFull()) {
-            gameOver = true;
-            showDrawMessage();
-            drawScore++;
-            return;
-        }
-
-        currentPlayer = currentPlayer.equals("X") ? "O" : "X";
+    if (game.makeMove(row, col)) {
+        highlightWinningLine();
+        showWinnerLabel();
+        showConfettiEffect();
+        return;
     }
+
+    if (game.isGameOver()) {
+        showDrawMessage();
+        return;
+    }
+
+    // Handle computer move if in Player vs Computer mode
+    if ("Player vs Computer".equals(gameMode)) {
+        makeComputerMove();
+    }
+}
+private void makeComputerMove() {
+    int[] move = game.getComputerMove(difficultyLevel); // Get move based on difficulty
+    if (move == null) return; // No valid move available
+
+    int row = move[0];
+    int col = move[1];
+
+    Button cell = board[row][col];
+    animateButton(cell);
+    cell.setText(game.getCurrentPlayer());
+
+    if (game.makeMove(row, col)) {
+        highlightWinningLine();
+        showWinnerLabel();
+        showConfettiEffect();
+        return;
+    }
+
+    if (game.isGameOver()) {
+        showDrawMessage();
+    }
+}
+
+
 
     private void animateButton(Button button) {
         ScaleTransition scale = new ScaleTransition(Duration.millis(200), button);
@@ -124,8 +136,7 @@ private void setupUI() {
         scale.setCycleCount(2);
         scale.play();
     }
-
-    private boolean checkWinner(String player) {
+        private boolean checkWinner(String player) {
         for (int i = 0; i < 3; i++) {
             if (checkLine(player, board[i][0], board[i][1], board[i][2]) ||
                 checkLine(player, board[0][i], board[1][i], board[2][i])) {
@@ -153,19 +164,19 @@ private void setupUI() {
 
     private void highlightWinningLine() {
         for (int i = 0; i < 3; i++) {
-            if (checkLine(currentPlayer, board[i][0], board[i][1], board[i][2])) {
+            if (checkLine(game.getCurrentPlayer(), board[i][0], board[i][1], board[i][2])) {
                 glowEffect(board[i][0], board[i][1], board[i][2]);
                 return;
             }
-            if (checkLine(currentPlayer, board[0][i], board[1][i], board[2][i])) {
+            if (checkLine(game.getCurrentPlayer(), board[0][i], board[1][i], board[2][i])) {
                 glowEffect(board[0][i], board[1][i], board[2][i]);
                 return;
             }
         }
 
-        if (checkLine(currentPlayer, board[0][0], board[1][1], board[2][2])) {
+        if (checkLine(game.getCurrentPlayer(), board[0][0], board[1][1], board[2][2])) {
             glowEffect(board[0][0], board[1][1], board[2][2]);
-        } else if (checkLine(currentPlayer, board[0][2], board[1][1], board[2][0])) {
+        } else if (checkLine(game.getCurrentPlayer(), board[0][2], board[1][1], board[2][0])) {
             glowEffect(board[0][2], board[1][1], board[2][0]);
         }
     }
@@ -177,13 +188,24 @@ private void setupUI() {
     }
 
 private void showWinnerLabel() {
-    winnerLabel.setText("🎉 Winner: " + currentPlayer + "! 🎉");
-    winnerLabel.setVisible(true);
+    String winnerSymbol = game.getCurrentPlayer();
+    String winnerName = winnerSymbol.equals("X") ? playerXName : playerOName;
 
-    // Show a fun congratulatory message
-    ticLabel.setText("🎊");
-    tacLabel.setText("Congrats,");
-    toeLabel.setText(currentPlayer + "! 🎊");
+    if (gameMode.equals("Player vs Computer") && winnerName.equals("🤖Computer⚡")) {
+        // Computer Wins -> Show Losing Message
+        winnerLabel.setText("😢 You Lost! Better luck next time!");
+        ticLabel.setText("💔");
+        tacLabel.setText("Oops,");
+        toeLabel.setText("Try Again!");
+    } else {
+        // Normal Winner Message
+        winnerLabel.setText("🎉 Winner: " + winnerName + "! 🎉");
+        ticLabel.setText("🎊");
+        tacLabel.setText("Congrats,");
+        toeLabel.setText(winnerName + "! 🎊");
+    }
+
+    winnerLabel.setVisible(true);
 
     winnerAnimation = new TranslateTransition(Duration.millis(500), winnerLabel);
     winnerAnimation.setFromY(-80);
@@ -222,8 +244,7 @@ private void showWinnerLabel() {
         scale.setCycleCount(2);
         scale.play();
     }
-
-    private void showDrawMessage() {
+     private void showDrawMessage() {
         winnerLabel.setText("🤝 It's a Draw! 🤝");
         winnerLabel.setVisible(true);
 
@@ -234,41 +255,35 @@ private void showWinnerLabel() {
         winnerAnimation.setAutoReverse(true);
         winnerAnimation.play();
     }
-
-private void resetGame() {
-    if (winnerAnimation != null) {
-        winnerAnimation.stop();
+     
+    private void resetGame() {
+        if (winnerAnimation != null) {
+            winnerAnimation.stop();
+        }
+        game.resetBoard();
+        winnerLabel.setVisible(false);
+        ticLabel.setText("Tic.");
+        tacLabel.setText("Tac.");
+        toeLabel.setText("Toe.");
+        gameBoard.getChildren().clear();
+        createGameBoard();
     }
-    gameOver = false;
-    currentPlayer = "X";
-    winnerLabel.setVisible(false);
 
-    // Restore original Tic Tac Toe text
-    ticLabel.setText("Tic.");
-    tacLabel.setText("Tac.");
-    toeLabel.setText("Toe.");
-
-    gameBoard.getChildren().clear();
-    createGameBoard();
-}
-
-
- 
     @FXML
     private void switchToSecondaryScene() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("ScoreBoardUI.fxml"));
             Parent newRoot = loader.load();
             ScoreBoardController scoreController = loader.getController();
-        scoreController.setPlayerData(playerXName, playerOName, playerXScore, playerOScore, drawScore);            
+            scoreController.setGameData(playerXName, playerOName, game.getPlayerXScore(), game.getPlayerOScore(), game.getDrawScore() , gameMode , difficultyLevel);
             Stage stage = (Stage) finishButton.getScene().getWindow();
             stage.setScene(new Scene(newRoot));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
-      @FXML
+
+    @FXML
     private void switchToPlayerNameScene() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("PlayerName.fxml"));
@@ -279,5 +294,5 @@ private void resetGame() {
             e.printStackTrace();
         }
     }
-
 }
+

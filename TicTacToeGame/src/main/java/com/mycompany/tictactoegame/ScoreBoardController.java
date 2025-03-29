@@ -30,14 +30,18 @@ public class ScoreBoardController {
     private String player1Name;
     private String player2Name;
 
- public void setPlayerData(String player1, String player2, int player1Score, int player2Score, int drawCount) {
-    player1ScoreLabel.setText(player1 + ": " + player1Score); // Name + Score
-    player2ScoreLabel.setText(player2 + ": " + player2Score); // Name + Score
-    drawScoreLabel.setText("Draws" + ": " + drawCount);
+ private String gameMode;
+private String difficultyLevel;
 
-    
-        this.player1Name = player1; 
-        this.player2Name = player2;
+public void setGameData(String player1, String player2, int player1Score, int player2Score, int drawCount, String mode, String difficulty) {
+    this.player1Name = player1;
+    this.player2Name = player2;
+    this.gameMode = mode;
+    this.difficultyLevel = difficulty;
+
+    player1ScoreLabel.setText(player1 + ": " + player1Score);
+    player2ScoreLabel.setText(player2 + ": " + player2Score);
+    drawScoreLabel.setText("Draws: " + drawCount);
 
     if (player1Score > player2Score) {
         winnerLabel.setText(player1 + " is Winning! 🏆");
@@ -49,13 +53,14 @@ public class ScoreBoardController {
 }
 
 
+
     @FXML
     private void switchToPrimaryScene() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("GameBoardUI.fxml"));
             Parent root = loader.load();
               GameBoardController gameController = loader.getController();
-              gameController.setPlayerNames(player1Name, player2Name); 
+              gameController.setGameSettings(player1Name, player2Name, gameMode, difficultyLevel);
             Stage stage = (Stage) yesButton.getScene().getWindow();
             Scene scene = new Scene(root);
 
@@ -70,3 +75,4 @@ public class ScoreBoardController {
         System.exit(0);
     }
 }
+
