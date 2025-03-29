@@ -29,7 +29,7 @@ public class ScoreBoardController {
     public void setPlayerData(String player1, String player2, int player1Score, int player2Score, int drawCount) {
         player1ScoreLabel.setText("" + player1Score);
         player2ScoreLabel.setText("" + player2Score);
-        drawScoreLabel.setText("Draws: " + drawCount);
+        drawScoreLabel.setText("" + drawCount);
 
         if (player1Score > player2Score) {
             winnerLabel.setText(player1 + " is Winning!");
