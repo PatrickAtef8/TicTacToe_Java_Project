@@ -36,7 +36,7 @@ private void startGame() {
     String difficulty = difficultyChoiceBox.getValue();
 
     if (mode.equals("Player vs Computer")) {
-        playerO = "🤖Computer⚡"; // Set funny AI name
+        playerO = "Computer⚡"; // Set funny AI name
         playerOName.setText(playerO);
     }
 
@@ -79,7 +79,7 @@ public void initialize() {
         playerOName.setDisable(isAI);
 
         if (isAI) {
-            playerOName.setText("🤖Computer⚡"); // Fun AI name
+            playerOName.setText("Computer⚡"); // Fun AI name
         } else {
             playerOName.clear();
         }

@@ -191,7 +191,7 @@ private void showWinnerLabel() {
     String winnerSymbol = game.getCurrentPlayer();
     String winnerName = winnerSymbol.equals("X") ? playerXName : playerOName;
 
-    if (gameMode.equals("Player vs Computer") && winnerName.equals("🤖Computer⚡")) {
+    if (gameMode.equals("Player vs Computer") && winnerName.equals("Computer⚡")) {
         // Computer Wins -> Show Losing Message
         winnerLabel.setText("😢 You Lost! Better luck next time!");
         ticLabel.setText("💔");
