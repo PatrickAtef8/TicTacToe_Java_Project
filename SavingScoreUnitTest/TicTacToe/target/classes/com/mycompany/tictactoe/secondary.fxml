@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.tictactoe.SecondaryController" spacing="10" alignment="CENTER">
+    <Label text="Game Scores"/>
+    <Label fx:id="xScoreLabel" text="X Score: 0"/>
+    <Label fx:id="oScoreLabel" text="O Score: 0"/>
+    <Button fx:id="restartButton" text="Restart Game" onAction="#restartGame"/>
+</VBox>

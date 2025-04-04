@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" spacing="40" style="-fx-background-color: #2B0B33; -fx-padding: 40px;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.tictactoegame.ScoreBoardController">
+
+    <Label fx:id="winnerLabel" style="-fx-text-fill: yellow; -fx-font-size: 60px; -fx-font-weight: bold; -fx-font-family: 'Comic Sans MS'; -fx-effect: dropshadow(gaussian, rgba(255,215,0,0.8), 10, 0, 0, 0);" text="🏆 Final Score 🏆" />
+
+    <HBox alignment="CENTER" spacing="40">
+        
+        <StackPane style="-fx-background-color: #33CCFF; -fx-padding: 20px; -fx-border-radius: 20px; -fx-background-radius: 20px;">
+            <VBox alignment="CENTER">
+                <Label fx:id="player1ScoreLabel" style="-fx-text-fill: white; -fx-font-size: 40px; -fx-font-weight: bold; -fx-font-family: 'Comic Sans MS';" text="0" />
+            </VBox>
+        </StackPane>
+        
+        <StackPane style="-fx-background-color: #B3E5FC; -fx-padding: 20px; -fx-border-radius: 20px; -fx-background-radius: 20px;">
+            <VBox alignment="CENTER">
+                <Label fx:id="drawScoreLabel" style="-fx-text-fill: black; -fx-font-size: 40px; -fx-font-weight: bold; -fx-font-family: 'Comic Sans MS';" text="0" />
+            </VBox>
+        </StackPane>
+        
+        <StackPane style="-fx-background-color: #FFDD44; -fx-padding: 20px; -fx-border-radius: 20px; -fx-background-radius: 20px;">
+            <VBox alignment="CENTER">
+                <Label fx:id="player2ScoreLabel" style="-fx-text-fill: white; -fx-font-size: 40px; -fx-font-weight: bold; -fx-font-family: 'Comic Sans MS';" text="0" />
+            </VBox>
+        </StackPane>
+        
+    </HBox>
+
+    <Label style="-fx-text-fill: #FFD700; -fx-font-size: 36px; -fx-font-weight: bold; -fx-font-family: 'Comic Sans MS'; -fx-effect: dropshadow(gaussian, rgba(255,215,0,0.8), 10, 0, 0, 0);" text="Play Another Round?" />
+
+    <HBox alignment="CENTER" spacing="40">
+        <Button fx:id="yesButton" onAction="#switchToPrimaryScene" style="-fx-background-color: linear-gradient(to right, #00FF00, #66FF66); -fx-text-fill: white; -fx-font-size: 28px; -fx-font-weight: bold; -fx-padding: 20px 40px; -fx-background-radius: 20px; -fx-border-radius: 20px; -fx-font-family: 'Comic Sans MS'; -fx-effect: dropshadow(gaussian, rgba(0,255,0,0.7), 20, 0, 0, 0);" text="Yes" />
+        
+        <Button fx:id="noButton" onAction="#exitApplication" style="-fx-background-color: linear-gradient(to right, #FF3333, #FF9966); -fx-text-fill: white; -fx-font-size: 28px; -fx-font-weight: bold; -fx-padding: 20px 40px; -fx-background-radius: 20px; -fx-border-radius: 20px; -fx-font-family: 'Comic Sans MS'; -fx-effect: dropshadow(gaussian, rgba(255,69,0,0.7), 20, 0, 0, 0);" text="Quit" />
+    </HBox>
+
+</VBox>

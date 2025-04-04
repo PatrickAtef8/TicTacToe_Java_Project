@@ -1,0 +1,5 @@
+com/mycompany/tictactoe/JoystickReader.class
+module-info.class
+com/mycompany/tictactoe/PrimaryController.class
+com/mycompany/tictactoe/SecondaryController.class
+com/mycompany/tictactoe/App.class
