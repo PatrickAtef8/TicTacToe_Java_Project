@@ -85,10 +85,37 @@ private int[] getRandomMove() {
     return availableMoves.get(new Random().nextInt(availableMoves.size()));
 }
 
-private int[] getBestMoveMedium() {
- 
-        return null;
- 
+private int[] getBestMoveMedium() 
+{
+    // 1. Check for winning or blocking moves
+    for (int i = 0; i < 3; i++) 
+    {
+        for (int j = 0; j < 3; j++) 
+        {
+            if (board[i][j].isEmpty()) 
+            {
+                board[i][j] = currentPlayer;
+                if (checkWinner(currentPlayer)) 
+                {
+                    board[i][j] = ""; // Undo move
+                    return new int[]{i, j}; // Winning move
+                }
+                board[i][j] = "";
+            }
+        }
+    }
+
+    // 2. Prefer center if available
+    if (board[1][1].isEmpty()) return new int[]{1, 1};
+
+    // 3. Prefer corners
+    int[][] corners = {{0, 0}, {0, 2}, {2, 0}, {2, 2}};
+    for (int[] corner : corners) {
+        if (board[corner[0]][corner[1]].isEmpty()) return corner;
+    }
+
+    // 4. If no good move, pick randomly
+    return getRandomMove();
 }
 
 
