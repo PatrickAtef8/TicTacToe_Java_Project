@@ -17,7 +17,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("PlayerName"), 640, 480); //ScoreBoardUI  PlayerName
+        scene = new Scene(loadFXML("StartMenuUI"), 640, 480); //ScoreBoardUI  PlayerName
         stage.setScene(scene);
         stage.show();
     }

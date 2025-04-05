@@ -7,6 +7,7 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
 import javafx.event.ActionEvent;
 import javafx.application.Platform;
+import javafx.stage.Stage;
 
 public class VirtualKeyboardController {
     private TextField targetTextField;
@@ -16,36 +17,85 @@ public class VirtualKeyboardController {
     // FXML injected buttons (must match your FXML exactly)
     @FXML private Button buttonA, buttonB, buttonC, buttonD, buttonE, buttonF, buttonG, buttonH, buttonI, buttonJ;
     @FXML private Button buttonK, buttonL, buttonM, buttonN, buttonO, buttonP, buttonQ, buttonR, buttonS, buttonT;
-    @FXML private Button buttonU, buttonV, buttonW, buttonX, buttonY, buttonZ, buttonSpace, buttonBackspace;
+    @FXML private Button buttonU, buttonV, buttonW, buttonX, buttonY, buttonZ, buttonSpace, buttonBackspace, buttonCaps , buttonOK;
     
+     private boolean isCapsLockOn = false;
+     private Button[] letterButtons;  // Will store only the letter buttons (A-Z)
     private Button[] keyboardButtons;
 
     @FXML
     public void initialize() {
-        // Initialize the button array in the exact order they appear in the FXML
+        // Initialize the button array (include Caps Lock button)
         keyboardButtons = new Button[] {
             buttonA, buttonB, buttonC, buttonD, buttonE, buttonF, buttonG, buttonH, buttonI, buttonJ,
             buttonK, buttonL, buttonM, buttonN, buttonO, buttonP, buttonQ, buttonR, buttonS, buttonT,
-            buttonU, buttonV, buttonW, buttonX, buttonY, buttonZ, buttonSpace, buttonBackspace
+            buttonU, buttonV, buttonW, buttonX, buttonY, buttonZ, buttonSpace, buttonBackspace, 
+            buttonCaps, buttonOK  // Added buttonCaps
+        };
+        
+        // Store just the letter buttons (A-Z) for case toggling
+        letterButtons = new Button[] {
+            buttonA, buttonB, buttonC, buttonD, buttonE, buttonF, buttonG, buttonH, buttonI, buttonJ,
+            buttonK, buttonL, buttonM, buttonN, buttonO, buttonP, buttonQ, buttonR, buttonS, buttonT,
+            buttonU, buttonV, buttonW, buttonX, buttonY, buttonZ
         };
         
         // Set initial focus
         updateFocus();
     }
-
+    
     @FXML
+    private void toggleCapsLock(ActionEvent event) {
+        isCapsLockOn = !isCapsLockOn;  // Toggle state
+        
+        // Update the Caps Lock button appearance
+        if (isCapsLockOn) {
+            buttonCaps.setStyle("-fx-font-size: 30px; -fx-padding: 15px; " +
+                "-fx-background-color: #FFD700; -fx-text-fill: black; " +  // Gold color when active
+                "-fx-border-radius: 8; -fx-background-radius: 8; " +
+                "-fx-border-color: #333; -fx-border-width: 2; " +
+                "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 2);");
+        } else {
+            buttonCaps.setStyle("-fx-font-size: 30px; -fx-padding: 15px; " +
+                "-fx-background-color: #FFA500; -fx-text-fill: black; " +  // Orange when inactive
+                "-fx-border-radius: 8; -fx-background-radius: 8; " +
+                "-fx-border-color: #333; -fx-border-width: 2; " +
+                "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 2);");
+        }
+        
+        // Toggle case of all letter buttons
+        for (Button button : letterButtons) {
+            String currentText = button.getText();
+            button.setText(isCapsLockOn ? currentText.toUpperCase() : currentText.toLowerCase());
+        }
+    }
+    
+
+    
+
+
+        @FXML
     private void addCharacter(ActionEvent event) {
         Button button = (Button) event.getSource();
         String text = button.getText();
         
         if (targetTextField != null) {
-            if ("Space".equals(text)) {
+            if ("Space".equalsIgnoreCase(text)) {
                 targetTextField.appendText(" ");
             } else {
+                // Use the current case (upper or lower) based on the button text
                 targetTextField.appendText(text);
             }
         }
     }
+    
+    @FXML
+private void closeKeyboard(ActionEvent event) {
+    // Get the stage (window) containing the OK button
+    Stage stage = (Stage) buttonOK.getScene().getWindow();
+    // Close the keyboard window
+    stage.close();
+}
 
     @FXML
     private void removeCharacter(ActionEvent event) {
@@ -123,27 +173,37 @@ public class VirtualKeyboardController {
         }
     }
 
-    private void updateFocus() {
-        Platform.runLater(() -> {
-            // Clear all effects first
-            for (Button button : keyboardButtons) {
-                if (button != null) {
-                    button.setEffect(null);
-                    button.setStyle("-fx-border-width: 0; -fx-background-color: transparent;");
-                }
+private void updateFocus() {
+    Platform.runLater(() -> {
+        // Clear all focus effects first
+        for (Button button : keyboardButtons) {
+            if (button != null) {
+                button.setEffect(null);
+                // Reset to original gray style
+                button.setStyle("-fx-font-size: 30px; -fx-padding: 15px; " +
+                    "-fx-background-color: #C0C0C0; -fx-text-fill: black; " +
+                    "-fx-border-radius: 8; -fx-background-radius: 8; " +
+                    "-fx-border-color: #333; -fx-border-width: 2; " +
+                    "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 2);");
             }
-            
-            // Apply effect to current button
-            if (currentFocusIndex >= 0 && currentFocusIndex < keyboardButtons.length) {
-                Button focusedButton = keyboardButtons[currentFocusIndex];
-                if (focusedButton != null) {
-                    focusedButton.setEffect(createGlowEffect());
-                    focusedButton.setStyle("-fx-border-color: yellow; -fx-border-width: 2; -fx-background-color: #4B0082;");
-                    focusedButton.requestFocus();
-                }
+        }
+        
+        // Apply focus effect to current button
+        if (currentFocusIndex >= 0 && currentFocusIndex < keyboardButtons.length) {
+            Button focusedButton = keyboardButtons[currentFocusIndex];
+            if (focusedButton != null) {
+                focusedButton.setEffect(createGlowEffect());
+                focusedButton.setStyle("-fx-font-size: 30px; -fx-padding: 15px; " +
+                    "-fx-background-color: #A9A9A9; -fx-text-fill: white; " +  // Slightly darker gray when focused
+                    "-fx-border-radius: 8; -fx-background-radius: 8; " +
+                    "-fx-border-color: yellow; -fx-border-width: 2; " +  // Yellow border for focus
+                    "-fx-effect: dropshadow(gaussian, rgba(255, 255, 0, 0.7), 10, 0, 0, 3);");
+                focusedButton.requestFocus();
             }
-        });
-    }
+        }
+    });
+}
+
 
     private DropShadow createGlowEffect() {
         DropShadow glow = new DropShadow();
@@ -152,4 +212,7 @@ public class VirtualKeyboardController {
         glow.setSpread(0.7);
         return glow;
     }
+    
+    
+    
 }

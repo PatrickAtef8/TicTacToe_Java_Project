@@ -12,10 +12,12 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import javafx.application.Platform;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
+import javafx.stage.Screen;
 
 public class PlayerNameController {
     
@@ -210,7 +212,19 @@ private void showVirtualKeyboard(TextField targetTextField) {
 
         Stage keyboardStage = new Stage();
         keyboardStage.setScene(new Scene(root));
-        keyboardStage.setTitle("Virtual Keyboard");
+        keyboardStage.setTitle("Keyboard");
+        
+        // Position the stage in the bottom-center of the screen
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        double keyboardWidth = 850; // Width of your keyboard
+        double keyboardHeight = 350; // Height of your keyboard
+        
+        // Calculate center position
+        double x = (screenBounds.getWidth() - keyboardWidth) / 2;
+        double y = screenBounds.getHeight() - keyboardHeight;
+        
+        keyboardStage.setX(x);
+        keyboardStage.setY(y);
         
         // Restore control when keyboard closes
         keyboardStage.setOnHidden(e -> {
@@ -224,7 +238,6 @@ private void showVirtualKeyboard(TextField targetTextField) {
         e.printStackTrace();
     }
 }
-
 
 private void sleepToPreventBounce() {
     try {
