@@ -6,4 +6,5 @@ module com.mycompany.tictactoegame {
     
     opens com.mycompany.tictactoegame to javafx.fxml;
     exports com.mycompany.tictactoegame;
+    requires jinput;
 }

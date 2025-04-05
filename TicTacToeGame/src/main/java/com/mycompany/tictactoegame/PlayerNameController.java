@@ -28,6 +28,9 @@ public class PlayerNameController {
     @FXML
     private Label warningLabel;
     
+    @FXML
+    private Button backButton;
+    
 @FXML
 private void startGame() {
     String playerX = playerXName.getText().trim();
@@ -87,6 +90,20 @@ public void initialize() {
 }
 
 
+public void setGameMode(String mode) {
+    modeChoiceBox.setValue(mode);
+
+    boolean isAI = mode.equals("Player vs Computer");
+    difficultyChoiceBox.setDisable(!isAI);
+    playerOName.setDisable(isAI);
+
+    if (isAI) {
+        playerOName.setText("Computer⚡");
+    } else {
+        playerOName.clear();
+    }
+}
+
 
 
     private void switchToGameBoardScene(String playerX, String playerO, String mode, String difficulty) {
@@ -109,4 +126,22 @@ public void initialize() {
     private void showWarningAlert() {
         System.out.println("Please enter player names before starting.");
     }
+    
+
+
+@FXML
+private void switchToGameModeUI() {
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("GameModeUI.fxml"));
+        Parent root = loader.load();
+
+        Stage stage = (Stage) backButton.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
+    } catch (IOException e) {
+        e.printStackTrace();
+        System.err.println("Error loading GameModeUI.fxml!");
+    }
+}
+
 }
