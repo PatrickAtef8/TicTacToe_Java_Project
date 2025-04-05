@@ -1,5 +1,6 @@
 package com.mycompany.tictactoegame;
 
+import javafx.application.Platform;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,6 +9,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 public class ScoreBoardController {
 
@@ -25,6 +29,10 @@ public class ScoreBoardController {
 
     @FXML
     private Button yesButton, noButton;
+
+    
+private JoystickReader joystickReader;
+private boolean selectingYes = true; // true = yesButton, false = noButton
 
     
     private String player1Name;
@@ -52,6 +60,75 @@ public void setGameData(String player1, String player2, int player1Score, int pl
     }
 }
 
+public void initialize() {
+    Platform.runLater(this::startJoystickNavigation);
+}
+
+public void handleJoystickMove(int joystickId, int axis, int value) {
+    double threshold = 20000; // Adjust as needed
+
+    // X-axis usually is axis 0
+    if (axis == 0) {
+        if (value > threshold || value < -threshold) {
+            selectingYes = !selectingYes;
+            updateButtonFocus();
+            try {
+                Thread.sleep(150); // prevent rapid toggling
+            } catch (InterruptedException ignored) {}
+        }
+    }
+}
+
+public void handleJoystickPress(int joystickId, int button) {
+    // Button 0 is usually the "A" or main action button
+    if (button == 0) {
+        Platform.runLater(() -> {
+            if (selectingYes) {
+                switchToPrimaryScene();
+            } else {
+                exitApplication();
+            }
+        });
+    }
+}
+
+
+
+public void startJoystickNavigation() {
+    String devicePath = "/dev/input/js0"; // Adjust if needed
+    int joystickId = 0;
+
+    joystickReader = new JoystickReader(this, devicePath, joystickId);
+    new Thread(joystickReader).start();
+}
+
+
+
+
+
+
+private DropShadow createGlowEffect() {
+    DropShadow glow = new DropShadow();
+    glow.setColor(Color.PURPLE);
+    glow.setRadius(20);
+    glow.setSpread(0.5);
+    return glow;
+}
+
+
+private void updateButtonFocus() {
+    Platform.runLater(() -> {
+        if (selectingYes) {
+            yesButton.setEffect(createGlowEffect());
+            noButton.setEffect(null);
+        } else {
+            noButton.setEffect(createGlowEffect());
+            yesButton.setEffect(null);
+        }
+    });
+}
+
+
 
 
     @FXML
@@ -74,5 +151,12 @@ public void setGameData(String player1, String player2, int player1Score, int pl
     private void exitApplication() {
         System.exit(0);
     }
+    
+    public void stopJoystick() {
+    if (joystickReader != null) {
+        joystickReader.stop();
+    }
+}
+
 }
 

@@ -51,7 +51,8 @@ public class GameModeUIController {
     }
 
     @FXML
-    private void switchToStartMenu() {
+    private void switchToStartMenu() 
+    {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("StartMenuUI.fxml"));
             Parent root = loader.load();

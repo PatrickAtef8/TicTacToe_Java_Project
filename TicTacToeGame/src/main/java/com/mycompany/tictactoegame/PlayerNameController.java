@@ -11,8 +11,11 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.paint.Color;
 
 public class PlayerNameController {
     
@@ -30,6 +33,13 @@ public class PlayerNameController {
     
     @FXML
     private Button backButton;
+    
+    private JoystickReader joystickReader;
+private int currentFocusIndex = 0;
+
+private javafx.scene.Node[] focusableNodes;
+
+
     
 @FXML
 private void startGame() {
@@ -80,14 +90,156 @@ public void initialize() {
         boolean isAI = modeChoiceBox.getValue().equals("Player vs Computer");
         difficultyChoiceBox.setDisable(!isAI);
         playerOName.setDisable(isAI);
-
         if (isAI) {
-            playerOName.setText("Computer⚡"); // Fun AI name
+            playerOName.setText("Computer⚡");
         } else {
             playerOName.clear();
         }
     });
+
+    // Focusable controls order
+    focusableNodes = new javafx.scene.Node[] {
+        playerXName, playerOName, modeChoiceBox, difficultyChoiceBox, startGameButton, backButton
+    };
+
+    updateFocus();
+
+    startJoystick();
 }
+
+// In your PlayerNameController.java
+
+public void handleJoystickMove(int joystickId, int axis, int value) {
+    
+    
+    // Debug output to see joystick values
+    System.out.println("Joystick Axis: " + axis + " Value: " + value);
+    
+    // Try different axis numbers - some joysticks use different numbering
+    if (axis == 1 || axis == 4) {  // Common Y-axis numbers
+               if (value == 32767) { //down
+                moveFocusDown();
+            } else if (value == 32769) { //up
+                moveFocusUp();
+            }
+    }
+
+}
+
+private void moveFocusDown() {
+    Platform.runLater(() -> {
+        currentFocusIndex = (currentFocusIndex + 1) % focusableNodes.length;
+        updateFocus();
+    });
+    sleepToPreventBounce();
+}
+
+private void moveFocusUp() {
+    Platform.runLater(() -> {
+        currentFocusIndex = (currentFocusIndex - 1 + focusableNodes.length) % focusableNodes.length;
+        updateFocus();
+    });
+    sleepToPreventBounce();
+}
+
+private void updateFocus() {
+    Platform.runLater(() -> {
+        for (int i = 0; i < focusableNodes.length; i++) {
+            javafx.scene.Node node = focusableNodes[i];
+            if (i == currentFocusIndex) {
+                node.setEffect(createGlowEffect());
+                // Request focus for better visual feedback
+                if (node instanceof TextField) {
+                    ((TextField) node).requestFocus();
+                } else if (node instanceof ChoiceBox) {
+                    ((ChoiceBox<?>) node).requestFocus();
+                } else if (node instanceof Button) {
+                    ((Button) node).requestFocus();
+                }
+            } else {
+                node.setEffect(null);
+            }
+        }
+    });
+}
+
+
+private void startJoystick() {
+    String devicePath = "/dev/input/js0"; // adjust if needed
+    int joystickId = 0;
+    joystickReader = new JoystickReader(this, devicePath, joystickId);
+    new Thread(joystickReader).start();
+}
+
+
+public void handleJoystickPress(int joystickId, int button) {
+    if (button == 0) { // Usually the "A" or "Enter" button
+        Platform.runLater(() -> {
+            javafx.scene.Node node = focusableNodes[currentFocusIndex];
+
+            if (node instanceof TextField) 
+            {
+                TextField textField = (TextField) node;
+                showVirtualKeyboard(textField);
+            } 
+            else if (node instanceof ChoiceBox) {
+                @SuppressWarnings("unchecked")
+                ChoiceBox<String> box = (ChoiceBox<String>) node;
+                int index = box.getItems().indexOf(box.getValue());
+                int next = (index + 1) % box.getItems().size();
+                box.setValue(box.getItems().get(next));
+            } else if (node instanceof Button) {
+                ((Button) node).fire();
+            }
+        });
+    }
+}
+
+
+@FXML
+private void showVirtualKeyboard(TextField targetTextField) {
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("VirtualKeyboard.fxml"));
+        Parent root = loader.load();
+        VirtualKeyboardController keyboardController = loader.getController();
+        keyboardController.setTargetTextField(targetTextField);
+        keyboardController.setJoystickReader(joystickReader);
+        
+        // Switch control to keyboard
+        joystickReader.setActiveController(keyboardController);
+
+        Stage keyboardStage = new Stage();
+        keyboardStage.setScene(new Scene(root));
+        keyboardStage.setTitle("Virtual Keyboard");
+        
+        // Restore control when keyboard closes
+        keyboardStage.setOnHidden(e -> {
+            joystickReader.setActiveController(this);
+            targetTextField.setEditable(true);
+        });
+        
+        keyboardStage.show();
+        targetTextField.setEditable(false);
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+
+
+private void sleepToPreventBounce() {
+    try {
+        Thread.sleep(150);
+    } catch (InterruptedException ignored) {}
+}
+
+private DropShadow createGlowEffect() {
+    DropShadow glow = new DropShadow();
+    glow.setColor(Color.PURPLE);
+    glow.setRadius(20);
+    glow.setSpread(0.5);
+    return glow;
+}
+
 
 
 public void setGameMode(String mode) {
@@ -144,4 +296,4 @@ private void switchToGameModeUI() {
     }
 }
 
-}
+} 
