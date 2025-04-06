@@ -22,7 +22,7 @@
     </ImageView>
 
     <!-- Game Title (original size maintained) -->
-    <Label text="⭕ Tic ✖ Tac ⭕ Toe ✖"
+    <Label text="⭕𝗼 Tic ✖ Tac ✖ Toe 𝗼"
            style="-fx-text-fill: #FFD700; -fx-font-size: 40px; -fx-font-weight: bold;
                   -fx-font-family: 'Comic Sans MS';
                   -fx-effect: dropshadow(gaussian, rgba(255,215,0,0.9), 12, 0, 0, 2);" />

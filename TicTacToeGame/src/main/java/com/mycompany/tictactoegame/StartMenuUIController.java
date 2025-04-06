@@ -26,25 +26,81 @@ private static final String HIGHLIGHT_ADDON =
     "-fx-effect: dropshadow(gaussian, rgba(241,196,15,0.7), 15, 0.5, 0, 0);";  // Gold glow
 
     @FXML
-    public void initialize() {
+    public void initialize() 
+    {  
+        buttons = new Button[]{startButton, quitButton};
         
+        // Store original styles
+        for (Button button : buttons) 
+        {
+            button.getProperties().put("originalStyle", button.getStyle());
+        }
         
+        updateSelection();
+        
+        try 
+        {
+            App.initializeJoysticks(this);
+        } catch (Exception e) 
+        {
+            joystickEnabled = false;
+            System.err.println("Joystick initialization failed: " + e.getMessage());
+        }
     }
     
     @Override
-    public void handleJoystickMove(int joystickId, int axisNumber, int value) {
-     
+    public void handleJoystickMove(int joystickId, int axisNumber, int value) 
+    {
+        if (!joystickEnabled) return;
+
+        Platform.runLater(() -> {
+            if (axisNumber == 5 || axisNumber == 1) 
+            { 
+                if (value == 32769 && selectedButtonIndex > 0) 
+                {
+                    selectedButtonIndex--;
+                    updateSelection();
+                } 
+                else if (value == 32767 && selectedButtonIndex < buttons.length - 1) 
+                {
+                    selectedButtonIndex++;
+                    updateSelection();
+                }
+            }
+        });
     }
 
     @Override
-    public void handleJoystickPress(int joystickId, int buttonNumber) {
+    public void handleJoystickPress(int joystickId, int buttonNumber) 
+    {
+        if (!joystickEnabled) return;
+        Platform.runLater(() -> {
+            if (buttonNumber == 0) 
+            { 
+            	// Primary action button
+                buttons[selectedButtonIndex].fire();
+            }
+        });
+    }
+
+    private void updateSelection() 
+    {
+        Platform.runLater(() -> {
+            // Reset all buttons to original style
+            for (Button button : buttons) 
+            {
+                String original = (String)button.getProperties().get("originalStyle");
+                button.setStyle(original != null ? original : "");
+            }
+            
+            // Highlight selected button
+            Button selected = buttons[selectedButtonIndex];
+            String original = (String)selected.getProperties().get("originalStyle");
+            selected.setStyle((original != null ? original : "") + HIGHLIGHT_ADDON);
+            selected.requestFocus();
+        });
+    }
     
-    }
-
-    private void updateSelection() {
-     
-    }
-
     @FXML
     private void switchToGameModeUI() {
         try {
@@ -69,9 +125,10 @@ private static final String HIGHLIGHT_ADDON =
     private void exitApplication() {
         System.exit(0);
     }
-
-    @Override
-    public boolean requiresSecondJoystick() {
+    
+     @Override
+    public boolean requiresSecondJoystick() 
+    {
         return false; // Start menu only needs one joystick
     }
 }
