@@ -21,8 +21,9 @@
                 
                 <!-- Buttons for Mode Selection -->
                 <VBox alignment="CENTER" spacing="20">
-                    <Button fx:id="playerVsPlayerButton" onAction="#selectPlayerVsPlayer" prefHeight="60.0" prefWidth="300.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-font-size: 24px;                                     -fx-font-weight: bold; -fx-text-fill: white; -fx-font-family: 'Comic Sans MS';                                     -fx-background-color: linear-gradient(to right, #FF3333, #FF9966);                                     -fx-effect: dropshadow(gaussian, rgba(255,69,0,0.7), 20, 0, 0, 0);                                     -fx-padding: 15 40;" text="Multiplayer" />
+                    <Button fx:id="playerVsPlayerButton" onAction="#selectPlayerVsPlayer" prefHeight="60.0" prefWidth="300.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white; -fx-font-family: 'Comic Sans MS'; -fx-background-color: linear-gradient(to right, #00FF00, #66FF66); -fx-effect: dropshadow(gaussian, rgba(0,255,0,0.7), 20, 0, 0, 0); -fx-padding: 15 40;" text="Multiplayer" />
                 </VBox>
+            <Button fx:id="backButton" onAction="#switchBackToStartMenu" prefHeight="60.0" prefWidth="146.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-font-size: 24px;                                     -fx-font-weight: bold; -fx-text-fill: white; -fx-font-family: 'Comic Sans MS';                                     -fx-background-color: linear-gradient(to right, #FF3333, #FF9966);                                     -fx-effect: dropshadow(gaussian, rgba(255,69,0,0.7), 20, 0, 0, 0);                                     -fx-padding: 15 40;" text="Back" />
 
             </VBox>
         </StackPane>
