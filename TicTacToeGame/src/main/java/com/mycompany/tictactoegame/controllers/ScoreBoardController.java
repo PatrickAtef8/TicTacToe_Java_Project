@@ -137,8 +137,9 @@ public class ScoreBoardController implements JoystickControllable {
 
     @FXML
     private void switchToGameBoardScene() {
-                    MusicController.playSound(MusicController.SOUND_CLICK);
+                    
         try {
+            MusicController.playSound(MusicController.SOUND_CLICK);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mycompany/tictactoegame/GameBoardUI.fxml"));
             Parent root = loader.load();
             GameBoardController gameController = loader.getController();
@@ -154,14 +155,15 @@ public class ScoreBoardController implements JoystickControllable {
 
     @FXML
     private void exitApplication() {
-                    MusicController.playSound(MusicController.SOUND_CLICK);
+        MusicController.playSound(MusicController.SOUND_CLICK);
         System.exit(0);
     }
 
     @FXML
     private void goHome(ActionEvent event) {
-                    MusicController.playSound(MusicController.SOUND_CLICK);
+                    
         try {
+            MusicController.playSound(MusicController.SOUND_CLICK);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mycompany/tictactoegame/StartMenuUI.fxml"));
             Parent root = loader.load();
             App.initializeJoysticks(loader.getController());

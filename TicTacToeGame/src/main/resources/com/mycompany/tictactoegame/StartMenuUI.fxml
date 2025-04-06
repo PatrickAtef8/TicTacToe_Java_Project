@@ -8,6 +8,7 @@
 
 <VBox alignment="CENTER" prefHeight="1080.0" prefWidth="1920.0" spacing="30" style="-fx-background-color: linear-gradient(to bottom, #1C0522, #3D125F);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.tictactoegame.controllers.StartMenuUIController">
 
+
     <!-- Empty spacer to push content vertically centered -->
     <VBox prefHeight="200.0" />
 
@@ -18,7 +19,7 @@
         </image>
     </ImageView>
 
-    <Label style="-fx-text-fill: #FFD700; -fx-font-size: 40px; -fx-font-weight: bold;                   -fx-font-family: 'Comic Sans MS';                   -fx-effect: dropshadow(gaussian, rgba(255,215,0,0.9), 12, 0, 0, 2);" text="⭕ Tic ✖ Tac ⭕ Toe ✖" />
+    <Label style="-fx-text-fill: #FFD700; -fx-font-size: 40px; -fx-font-weight: bold;                   -fx-font-family: 'Comic Sans MS';                   -fx-effect: dropshadow(gaussian, rgba(255,215,0,0.9), 12, 0, 0, 2);" text=" 𝗼 Tic ✖ Tac ✖ Toe 𝗼" />
 
     <!-- Start Button (original size maintained) -->
     <Button fx:id="startButton" onAction="#switchToGameModeUI" style="-fx-background-color: linear-gradient(to right, #00FF00, #66FF66);                    -fx-text-fill: white; -fx-font-size: 26px; -fx-font-weight: bold;                    -fx-padding: 15px 35px; -fx-background-radius: 25px; -fx-border-radius: 25px;                    -fx-font-family: 'Comic Sans MS';                    -fx-effect: dropshadow(gaussian, rgba(0,255,0,0.8), 20, 0, 0, 0);" text="Start Game" />
@@ -28,5 +29,6 @@
 
     <!-- Empty spacer to balance vertical centering -->
     <VBox prefHeight="200.0" />
-<Button fx:id="muteButton" onAction="#toggleMute" style="-fx-background-color: linear-gradient(to right, #9B59B6, #3498DB);                -fx-text-fill: white;                 -fx-font-size: 22px;                 -fx-font-family: 'Comic Sans MS';                -fx-font-weight: bold;                -fx-padding: 12px 30px;                 -fx-background-radius: 25px;                 -fx-border-radius: 25px;                -fx-effect: dropshadow(gaussian, rgba(155,89,182,0.8), 15, 0, 0, 0);" text="🔈 Mute" />
+<Button fx:id="muteButton" onAction="#toggleMute" prefHeight="50.0" prefWidth="166.0" style="-fx-background-color: linear-gradient(to right, #9B59B6, #3498DB);                -fx-text-fill: white;                 -fx-font-size: 22px;                 -fx-font-family: 'Comic Sans MS';                -fx-font-weight: bold;                -fx-padding: 12px 30px;                 -fx-background-radius: 25px;                 -fx-border-radius: 25px;                -fx-effect: dropshadow(gaussian, rgba(155,89,182,0.8), 15, 0, 0, 0);" text="Mute" />
 </VBox>
+

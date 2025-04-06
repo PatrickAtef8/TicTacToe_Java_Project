@@ -447,6 +447,7 @@ private void showDrawMessage() {
 }
 
 private void resetGame() {
+    MusicController.playSound(MusicController.SOUND_CLICK);
     if (winnerAnimation != null) {
         winnerAnimation.stop();
     }
@@ -482,6 +483,7 @@ private void resetGame() {
    @FXML
 private void switchToScoreBoardScene() {
     try {
+        MusicController.playSound(MusicController.SOUND_CLICK);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mycompany/tictactoegame/ScoreBoardUI.fxml"));
         Parent newRoot = loader.load();
         
@@ -504,6 +506,7 @@ private void switchToScoreBoardScene() {
 @FXML
 private void switchToPlayerNameScene() {
     try {
+        MusicController.playSound(MusicController.SOUND_CLICK);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mycompany/tictactoegame/StartMenuUI.fxml"));
         Parent newRoot = loader.load();
         

@@ -226,6 +226,7 @@ private void openVirtualKeyboard(TextField targetField) {
 
     @FXML
     private void goToNextScreen() {
+        MusicController.playSound(MusicController.SOUND_CLICK);
         String playerX = playerXName.getText().trim();
         String playerO = playerOName.getText().trim();
 

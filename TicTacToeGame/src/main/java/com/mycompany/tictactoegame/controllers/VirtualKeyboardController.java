@@ -1,5 +1,6 @@
 package com.mycompany.tictactoegame.controllers;
 
+import com.mycompany.tictactoegame.utils.MusicController;
 import com.mycompany.tictactoegame.utils.input.JoystickControllable;
 import com.mycompany.tictactoegame.utils.input.JoystickReader;
 import javafx.fxml.FXML;
@@ -96,6 +97,7 @@ public void initialize() {
 
         @FXML
     private void addCharacter(ActionEvent event) {
+        MusicController.playSound(MusicController.SOUND_CLICK);
         Button button = (Button) event.getSource();
         String text = button.getText();
         
@@ -111,6 +113,7 @@ public void initialize() {
     
     @FXML
 private void closeKeyboard(ActionEvent event) {
+    MusicController.playSound(MusicController.SOUND_CLICK);
     // Get the stage (window) containing the OK button
     Stage stage = (Stage) buttonOK.getScene().getWindow();
     // Close the keyboard window
@@ -119,6 +122,7 @@ private void closeKeyboard(ActionEvent event) {
 
     @FXML
     private void removeCharacter(ActionEvent event) {
+        MusicController.playSound(MusicController.SOUND_CLICK);
         if (targetTextField != null) {
             String currentText = targetTextField.getText();
             if (!currentText.isEmpty()) {
