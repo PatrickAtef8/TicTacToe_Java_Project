@@ -174,10 +174,6 @@ private void openVirtualKeyboard(TextField targetField) {
         });
     }
 
-    @Override
-    public boolean requiresSecondJoystick() {
-        return false;
-    }
 
     public void setGameMode(String mode) {
         this.gameMode = mode;
@@ -326,4 +322,10 @@ private void showWarningAlert(String title, String content) {
             System.err.println("❌ Error: Could not load ModeSelectionUI.fxml!");
         }
     }
+    
+        @Override
+    public boolean requiresSecondJoystick() {
+        return false;
+    }
+
 }
