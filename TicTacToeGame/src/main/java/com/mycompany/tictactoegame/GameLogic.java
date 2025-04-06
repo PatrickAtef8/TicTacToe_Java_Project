@@ -52,132 +52,121 @@ public class GameLogic {
         return false;
     }
 
-    public void computeMove() {
-        if (gameOver || !currentPlayer.equals("O")) return; // Ensure it's the computer's turn
+    public int[] getComputerMove(String difficulty) {
+        if (gameOver) return null;
 
-        int[] move;
         switch (difficulty) {
             case "Easy":
-                move = getRandomMove();
-                break;
+                return getRandomMove();
             case "Medium":
-                move = getBestMoveMedium();
-                break;
+                return getBestMoveMedium();
             case "Hard":
-                move = getBestMoveMinimax();
-                break;
+                return getBestMoveMinimax();
             default:
-                move = getRandomMove();
-        }
-
-        if (move != null) {
-            makeMove(move[0], move[1]);
+                return getRandomMove();
         }
     }
 
-private int[] getRandomMove() {
-    List<int[]> availableMoves = new ArrayList<>();
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
-            if (board[i][j].isEmpty()) availableMoves.add(new int[]{i, j});
-        }
-    }
-    return availableMoves.get(new Random().nextInt(availableMoves.size()));
-}
-
-private int[] getBestMoveMedium() 
-{
-    // 1. Check for winning or blocking moves
-    for (int i = 0; i < 3; i++) 
-    {
-        for (int j = 0; j < 3; j++) 
-        {
-            if (board[i][j].isEmpty()) 
-            {
-                board[i][j] = currentPlayer;
-                if (checkWinner(currentPlayer)) 
-                {
-                    board[i][j] = ""; // Undo move
-                    return new int[]{i, j}; // Winning move
-                }
-                board[i][j] = "";
+    private int[] getRandomMove() {
+        List<int[]> availableMoves = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (board[i][j].isEmpty()) availableMoves.add(new int[]{i, j});
             }
         }
+        return availableMoves.isEmpty() ? null : availableMoves.get(new Random().nextInt(availableMoves.size()));
     }
 
-    // 2. Prefer center if available
-    if (board[1][1].isEmpty()) return new int[]{1, 1};
-
-    // 3. Prefer corners
-    int[][] corners = {{0, 0}, {0, 2}, {2, 0}, {2, 2}};
-    for (int[] corner : corners) {
-        if (board[corner[0]][corner[1]].isEmpty()) return corner;
-    }
-
-    // 4. If no good move, pick randomly
-    return getRandomMove();
-}
-
-
-private int[] getBestMoveMinimax() {
-    int bestScore = Integer.MIN_VALUE;
-    int[] bestMove = new int[]{-1, -1};
-
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
-            if (board[i][j].isEmpty()) {
-                board[i][j] = "O";
-                int score = minimax(0, false, Integer.MIN_VALUE, Integer.MAX_VALUE);
-                board[i][j] = "";
-                if (score > bestScore) {
-                    bestScore = score;
-                    bestMove = new int[]{i, j};
-                }
-            }
-        }
-    }
-    return bestMove;
-}
-
-
-private int minimax(int depth, boolean isMaximizing, int alpha, int beta) {
-    if (checkWinner("O")) return 10 - depth; 
-    if (checkWinner("X")) return depth - 10; 
-    if (isBoardFull()) return 0;
-
-    if (isMaximizing) {  // AI's turn (maximize)
-        int bestScore = Integer.MIN_VALUE;
+    private int[] getBestMoveMedium() {
+        // First check if computer can win in the next move
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (board[i][j].isEmpty()) {
                     board[i][j] = "O";
-                    int score = minimax(depth + 1, false, alpha, beta);
+                    if (checkWinner("O")) {
+                        board[i][j] = "";
+                        return new int[]{i, j};
+                    }
                     board[i][j] = "";
-                    bestScore = Math.max(bestScore, score);
-                    alpha = Math.max(alpha, score); // Update alpha
-                    if (beta <= alpha) return bestScore; // Prune
                 }
             }
         }
-        return bestScore;
-    } else {  // Player's turn (minimize)
-        int bestScore = Integer.MAX_VALUE;
+
+        // Then check if player can win in the next move and block them
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (board[i][j].isEmpty()) {
                     board[i][j] = "X";
-                    int score = minimax(depth + 1, true, alpha, beta);
+                    if (checkWinner("X")) {
+                        board[i][j] = "";
+                        return new int[]{i, j};
+                    }
                     board[i][j] = "";
-                    bestScore = Math.min(bestScore, score);
-                    beta = Math.min(beta, score); // Update beta
-                    if (beta <= alpha) return bestScore; // Prune
                 }
             }
         }
-        return bestScore;
-    }
-}
 
+        // Otherwise make a random move
+        return getRandomMove();
+    }
+
+    private int[] getBestMoveMinimax() {
+        int bestScore = Integer.MIN_VALUE;
+        int[] bestMove = new int[]{-1, -1};
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (board[i][j].isEmpty()) {
+                    board[i][j] = "O";
+                    int score = minimax(0, false, Integer.MIN_VALUE, Integer.MAX_VALUE);
+                    board[i][j] = "";
+                    if (score > bestScore) {
+                        bestScore = score;
+                        bestMove = new int[]{i, j};
+                    }
+                }
+            }
+        }
+        return bestMove;
+    }
+
+    private int minimax(int depth, boolean isMaximizing, int alpha, int beta) {
+        if (checkWinner("O")) return 10 - depth;
+        if (checkWinner("X")) return depth - 10;
+        if (isBoardFull()) return 0;
+
+        if (isMaximizing) {
+            int bestScore = Integer.MIN_VALUE;
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    if (board[i][j].isEmpty()) {
+                        board[i][j] = "O";
+                        int score = minimax(depth + 1, false, alpha, beta);
+                        board[i][j] = "";
+                        bestScore = Math.max(bestScore, score);
+                        alpha = Math.max(alpha, score);
+                        if (beta <= alpha) return bestScore;
+                    }
+                }
+            }
+            return bestScore;
+        } else {
+            int bestScore = Integer.MAX_VALUE;
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    if (board[i][j].isEmpty()) {
+                        board[i][j] = "X";
+                        int score = minimax(depth + 1, true, alpha, beta);
+                        board[i][j] = "";
+                        bestScore = Math.min(bestScore, score);
+                        beta = Math.min(beta, score);
+                        if (beta <= alpha) return bestScore;
+                    }
+                }
+            }
+            return bestScore;
+        }
+    }
 
     private boolean checkWinner(String player) {
         for (int i = 0; i < 3; i++) {
@@ -205,22 +194,6 @@ private int minimax(int depth, boolean isMaximizing, int alpha, int beta) {
         return true;
     }
 
-    public int[] getComputerMove(String difficulty) {
-    if (gameOver) return null; // No move if the game is over
-
-    switch (difficulty) {
-        case "Easy":
-            return getRandomMove();
-        case "Medium":
-            return getBestMoveMedium();
-        case "Hard":
-            return getBestMoveMinimax();
-        default:
-            return getRandomMove();
-    }
-}
-
-    
     private void switchPlayer() {
         currentPlayer = currentPlayer.equals("X") ? "O" : "X";
     }
@@ -253,4 +226,3 @@ private int minimax(int depth, boolean isMaximizing, int alpha, int beta) {
         return drawScore;
     }
 }
-

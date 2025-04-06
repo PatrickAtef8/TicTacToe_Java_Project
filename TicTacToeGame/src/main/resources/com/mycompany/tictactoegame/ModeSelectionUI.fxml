@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane style="-fx-background-color: #5B2576" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.tictactoegame.ModeSelectionController">
+    
+    <!-- Center Section: Game Mode Selection -->
+    <center>
+        <StackPane alignment="CENTER" style="-fx-padding: 40;"> 
+            <VBox alignment="CENTER" spacing="35" style="-fx-background-color: #2B0B33; -fx-background-radius: 30; -fx-padding: 40;">
+                
+                <!-- Game Mode Title -->
+                <Label fx:id="winnerLabel" style="-fx-text-fill: yellow; -fx-font-size: 50px; -fx-font-weight: bold; -fx-font-family: 'Comic Sans MS'; -fx-effect: dropshadow(gaussian, rgba(255,215,0,0.8), 10, 0, 0, 0);" text="Select Game Mode" />  
+
+                 <Button fx:id="playerVsComputerButton" onAction="#selectPlayerVsComputer" prefHeight="60.0" prefWidth="300.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-font-size: 24px;                                     -fx-font-weight: bold; -fx-text-fill: white; -fx-font-family: 'Comic Sans MS';                                     -fx-background-color: linear-gradient(to right, #00FF00, #66FF66);                                     -fx-effect: dropshadow(gaussian, rgba(0,255,0,0.7), 20, 0, 0, 0);                                     -fx-padding: 15 40;" text="Single Player" />
+                
+                <!-- Buttons for Mode Selection -->
+                <VBox alignment="CENTER" spacing="20">
+                    <Button fx:id="playerVsPlayerButton" onAction="#selectPlayerVsPlayer" prefHeight="60.0" prefWidth="300.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white; -fx-font-family: 'Comic Sans MS'; -fx-background-color: linear-gradient(to right, #00FF00, #66FF66); -fx-effect: dropshadow(gaussian, rgba(0,255,0,0.7), 20, 0, 0, 0); -fx-padding: 15 40;" text="Multiplayer" />
+                </VBox>
+            <Button fx:id="backButton" onAction="#switchBackToStartMenu" prefHeight="60.0" prefWidth="146.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-font-size: 24px;                                     -fx-font-weight: bold; -fx-text-fill: white; -fx-font-family: 'Comic Sans MS';                                     -fx-background-color: linear-gradient(to right, #FF3333, #FF9966);                                     -fx-effect: dropshadow(gaussian, rgba(255,69,0,0.7), 20, 0, 0, 0);                                     -fx-padding: 15 40;" text="Back" />
+
+            </VBox>
+        </StackPane>
+    </center>
+
+    <!-- Bottom Section: Title & Animated Labels -->
+    <bottom>
+        <VBox alignment="CENTER" spacing="15" style="-fx-padding: 20;">
+            
+            <!-- Animated Tic Tac Toe Title -->
+            <HBox alignment="CENTER" spacing="10">
+                <Label fx:id="ticLabel" style="-fx-text-fill: yellow; -fx-font-size: 50px; -fx-font-weight: bold; -fx-font-family: 'Comic Sans MS'; -fx-effect: dropshadow(gaussian, rgba(255,215,0,0.8), 10, 0, 0, 0);" text="Tic." />
+                <Label fx:id="tacLabel" style="-fx-text-fill: deepskyblue; -fx-font-size: 50px; -fx-font-weight: bold; -fx-font-family: 'Comic Sans MS'; -fx-effect: dropshadow(gaussian, rgba(0,191,255,0.8), 10, 0, 0, 0);" text="Tac." />
+                <Label fx:id="toeLabel" style="-fx-text-fill: yellow; -fx-font-size: 50px; -fx-font-weight: bold; -fx-font-family: 'Comic Sans MS'; -fx-effect: dropshadow(gaussian, rgba(255,215,0,0.8), 10, 0, 0, 0);" text="Toe." />
+            </HBox>
+
+        </VBox>
+    </bottom>
+
+</BorderPane>

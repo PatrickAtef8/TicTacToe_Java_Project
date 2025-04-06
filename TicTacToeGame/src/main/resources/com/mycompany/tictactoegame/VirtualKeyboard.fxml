@@ -56,4 +56,3 @@
         style="-fx-font-size: 30px; -fx-padding: 15px; -fx-background-color: #4CAF50; -fx-text-fill: white; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 2);" 
         GridPane.rowIndex="3" GridPane.columnIndex="9" GridPane.columnSpan="1"/>
 </GridPane>
-

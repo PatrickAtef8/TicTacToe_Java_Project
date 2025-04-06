@@ -9,7 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
-public class VirtualKeyboardController {
+public class VirtualKeyboardController implements JoystickControllable{
     private TextField targetTextField;
     private JoystickReader joystickReader;
     private int currentFocusIndex = 0;
@@ -23,29 +23,48 @@ public class VirtualKeyboardController {
      private Button[] letterButtons;  // Will store only the letter buttons (A-Z)
     private Button[] keyboardButtons;
 
-    @FXML
-    public void initialize() {
-        // Initialize the button array (include Caps Lock button)
-        keyboardButtons = new Button[] {
-            buttonA, buttonB, buttonC, buttonD, buttonE, buttonF, buttonG, buttonH, buttonI, buttonJ,
-            buttonK, buttonL, buttonM, buttonN, buttonO, buttonP, buttonQ, buttonR, buttonS, buttonT,
-            buttonU, buttonV, buttonW, buttonX, buttonY, buttonZ, buttonSpace, buttonBackspace, 
-            buttonCaps, buttonOK  // Added buttonCaps
-        };
-        
-        // Store just the letter buttons (A-Z) for case toggling
-        letterButtons = new Button[] {
-            buttonA, buttonB, buttonC, buttonD, buttonE, buttonF, buttonG, buttonH, buttonI, buttonJ,
-            buttonK, buttonL, buttonM, buttonN, buttonO, buttonP, buttonQ, buttonR, buttonS, buttonT,
-            buttonU, buttonV, buttonW, buttonX, buttonY, buttonZ
-        };
-        
-        // Set initial focus
+  
+    
+    public void requestFocus() {
+    if (keyboardButtons != null && keyboardButtons.length > 0) {
+        currentFocusIndex = 0;
         updateFocus();
     }
+}
+
+// Add this to handle focus when the window is shown
+public void setInitialFocus() {
+    Platform.runLater(() -> {
+        if (keyboardButtons != null && keyboardButtons.length > 0) {
+            keyboardButtons[0].requestFocus();
+            currentFocusIndex = 0;
+            updateFocus();
+        }
+    });
+}
+  @FXML
+public void initialize() {
+    // Initialize the button array (include Caps Lock button)
+    keyboardButtons = new Button[] {
+        buttonA, buttonB, buttonC, buttonD, buttonE, buttonF, buttonG, buttonH, buttonI, buttonJ,
+        buttonK, buttonL, buttonM, buttonN, buttonO, buttonP, buttonQ, buttonR, buttonS, buttonT,
+        buttonU, buttonV, buttonW, buttonX, buttonY, buttonZ, buttonSpace, buttonBackspace, 
+        buttonCaps, buttonOK
+    };
+    
+    letterButtons = new Button[] {
+        buttonA, buttonB, buttonC, buttonD, buttonE, buttonF, buttonG, buttonH, buttonI, buttonJ,
+        buttonK, buttonL, buttonM, buttonN, buttonO, buttonP, buttonQ, buttonR, buttonS, buttonT,
+        buttonU, buttonV, buttonW, buttonX, buttonY, buttonZ
+    };
+    
+    // Set initial focus when the keyboard loads
+    setInitialFocus();
+}
     
     @FXML
     private void toggleCapsLock(ActionEvent event) {
+        MusicController.playSound(MusicController.SOUND_CLICK);
         isCapsLockOn = !isCapsLockOn;  // Toggle state
         
         // Update the Caps Lock button appearance
@@ -76,6 +95,7 @@ public class VirtualKeyboardController {
 
         @FXML
     private void addCharacter(ActionEvent event) {
+        MusicController.playSound(MusicController.SOUND_CLICK);
         Button button = (Button) event.getSource();
         String text = button.getText();
         
@@ -91,6 +111,7 @@ public class VirtualKeyboardController {
     
     @FXML
 private void closeKeyboard(ActionEvent event) {
+    MusicController.playSound(MusicController.SOUND_CLICK);
     // Get the stage (window) containing the OK button
     Stage stage = (Stage) buttonOK.getScene().getWindow();
     // Close the keyboard window
@@ -99,6 +120,7 @@ private void closeKeyboard(ActionEvent event) {
 
     @FXML
     private void removeCharacter(ActionEvent event) {
+        MusicController.playSound(MusicController.SOUND_CLICK);
         if (targetTextField != null) {
             String currentText = targetTextField.getText();
             if (!currentText.isEmpty()) {
@@ -115,33 +137,6 @@ private void closeKeyboard(ActionEvent event) {
         this.joystickReader = joystickReader;
     }
 
-    public void handleJoystickMove(int axis, int value) {
-        
-
-        if (axis == 1) { // Y-axis (up/down)
-            if (value == 32767) { //down
-                moveFocusDown();
-            } else if (value == 32769) { //up
-                moveFocusUp();
-            }
-        } else if (axis == 0) { // X-axis (left/right)
-            if (value == 32767) {
-                moveFocusRight();
-            } else if (value == 32769) {
-                moveFocusLeft();
-            }
-        }
-    }
-
-    public void handleJoystickPress(int button) {
-        if (button == 0) { // "A" or Enter button
-            Platform.runLater(() -> {
-                if (currentFocusIndex >= 0 && currentFocusIndex < keyboardButtons.length) {
-                    keyboardButtons[currentFocusIndex].fire();
-                }
-            });
-        }
-    }
 
     private void moveFocusUp() {
         int columns = 10; // Matches your GridPane column count
@@ -212,7 +207,34 @@ private void updateFocus() {
         glow.setSpread(0.7);
         return glow;
     }
-    
+
+     @Override
+    public void handleJoystickMove(int joystickId, int axisNumber, int value) {
+        // Implement joystick move handling
+        if (axisNumber == 5 || axisNumber == 1) { // Y-axis
+            if (value == 32767) moveFocusDown();
+            else if (value == 32769) moveFocusUp();
+        } else if (axisNumber == 4 || axisNumber == 0){ // X-axis
+            if (value == 32767) moveFocusRight();
+            else if (value == 32769) moveFocusLeft();
+        }
+    }
+
+
+    @Override
+    public void handleJoystickPress(int joystickId, int buttonNumber) {
+        if (buttonNumber == 0) { // "A" button
+            Platform.runLater(() -> {
+                if (currentFocusIndex >= 0 && currentFocusIndex < keyboardButtons.length) {
+                    keyboardButtons[currentFocusIndex].fire();
+                }
+            });
+        }
+    }
+     @Override
+    public boolean requiresSecondJoystick() {
+        return false;
+    }
     
     
 }
