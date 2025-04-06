@@ -160,36 +160,64 @@ private void updateActionButtonSelection() {
     }
 
     private void updateSelection(int joystickId) {
-        
-        
-         if ("Player vs Computer".equals(gameMode) && joystickId == 1) {
+    // Skip if it's Player vs Computer and the joystick is for the computer (ID 1)
+    if ("Player vs Computer".equals(gameMode) && joystickId == 1) {
         return;
     }
-        Platform.runLater(() -> {
-            // Clear previous selection for this player
+
+    Platform.runLater(() -> {
+        // If the game is over, remove all selection highlights
+        if (game.isGameOver()) {
             for (Button[] row : board) {
                 for (Button button : row) {
+                    // Reset style (remove player-specific border)
                     String style = button.getStyle();
-                    if (style.contains(playerColors[joystickId])) {
-                        style = style.replace("-fx-border-color: " + playerColors[joystickId], "")
-                                    .replace("-fx-border-width: 3px", "")
-                                    .replace("-fx-border-radius: 5px", "")
-                                    .replace(";;", ";")
-                                    .trim();
-                        if (style.isEmpty()) {
-                            style = "-fx-background-color: #AA44CC; -fx-text-fill: white; -fx-font-size: 30px; -fx-font-weight: bold; -fx-border-radius: 10;";
-                        }
-                        button.setStyle(style);
+                    style = style.replace("-fx-border-color: " + playerColors[joystickId], "")
+                                .replace("-fx-border-width: 3px", "")
+                                .replace("-fx-border-radius: 5px", "")
+                                .replace(";;", ";")
+                                .trim();
+                    // Apply default style if empty
+                    if (style.isEmpty()) {
+                        style = "-fx-background-color: #AA44CC; -fx-text-fill: white; -fx-font-size: 30px; -fx-font-weight: bold; -fx-border-radius: 10;";
                     }
+                    button.setStyle(style);
                 }
             }
+            return; // Exit early (no further highlighting)
+        }
+
+        // Clear previous selection for this player
+     for (Button[] row : board) {
+    for (Button button : row) {
+        String style = button.getStyle();
+        if (style.contains(playerColors[joystickId])) {
+            // Remove player-specific border styling
+            style = style.replace("-fx-border-color: " + playerColors[joystickId], "")
+                        .replace("-fx-border-width: 3px", "")
+                        .replace("-fx-border-radius: 5px", "")
+                        .replace(";;", ";")
+                        .trim();
             
-            // Highlight new selection
-            Button selected = board[selectedRows[joystickId]][selectedCols[joystickId]];
-            String baseStyle = "-fx-background-color: #AA44CC; -fx-text-fill: white; -fx-font-size: 30px; -fx-font-weight: bold; -fx-border-radius: 10;";
-            selected.setStyle(baseStyle + " -fx-border-color: " + playerColors[joystickId] + "; -fx-border-width: 3px; -fx-border-radius: 5px;");
-        });
+            // Set default style that matches grid spacing
+            if (style.isEmpty()) {
+                style = "-fx-background-color: #AA44CC; -fx-text-fill: white; " +
+                        "-fx-font-size: 30px; -fx-font-weight: bold; " +
+                        "-fx-border-width: 10px; -fx-border-color: transparent;";
+            }
+            button.setStyle(style);
+        }
     }
+}
+        
+       Button selected = board[selectedRows[joystickId]][selectedCols[joystickId]];
+String highlightedStyle = "-fx-background-color: #AA44CC; -fx-text-fill: white; " +
+                         "-fx-font-size: 30px; -fx-font-weight: bold; " +
+                         "-fx-border-width: 5px; " +
+                         "-fx-border-color: " + playerColors[joystickId] + ";";
+selected.setStyle(highlightedStyle);
+    });
+}
 
     public void setGameSettings(String playerX, String playerO, String mode, String difficulty) {
         player1Label.setText(playerX);
@@ -288,28 +316,34 @@ private void updateActionButtonSelection() {
         scale.play();
     }
 
-    private void highlightWinningLine() {
-        for (int i = 0; i < 3; i++) {
-            if (checkLine(game.getCurrentPlayer(), board[i][0], board[i][1], board[i][2])) {
-                glowEffect(board[i][0], board[i][1], board[i][2]);
-                return;
-            }
-            if (checkLine(game.getCurrentPlayer(), board[0][i], board[1][i], board[2][i])) {
-                glowEffect(board[0][i], board[1][i], board[2][i]);
-                return;
-            }
-        }
-
-        if (checkLine(game.getCurrentPlayer(), board[0][0], board[1][1], board[2][2])) {
-            glowEffect(board[0][0], board[1][1], board[2][2]);
-        } else if (checkLine(game.getCurrentPlayer(), board[0][2], board[1][1], board[2][0])) {
-            glowEffect(board[0][2], board[1][1], board[2][0]);
+   private void highlightWinningLine() {
+    // Check all rows
+    for (int i = 0; i < 3; i++) {
+        if (checkLine(board[i][0], board[i][1], board[i][2])) {
+            glowEffect(board[i][0], board[i][1], board[i][2]);
+            return;
         }
     }
 
-    private boolean checkLine(String player, Button b1, Button b2, Button b3) {
-        return player.equals(b1.getText()) && player.equals(b2.getText()) && player.equals(b3.getText());
+    // Check all columns
+    for (int i = 0; i < 3; i++) {
+        if (checkLine(board[0][i], board[1][i], board[2][i])) {
+            glowEffect(board[0][i], board[1][i], board[2][i]);
+            return;
+        }
     }
+
+    // Check diagonals
+    if (checkLine(board[0][0], board[1][1], board[2][2])) {
+        glowEffect(board[0][0], board[1][1], board[2][2]);
+    } else if (checkLine(board[0][2], board[1][1], board[2][0])) {
+        glowEffect(board[0][2], board[1][1], board[2][0]);
+    }
+}
+   private boolean checkLine(Button b1, Button b2, Button b3) {
+    String text = b1.getText();
+    return !text.isEmpty() && text.equals(b2.getText()) && text.equals(b3.getText());
+}
 
     private void glowEffect(Button... buttons) {
         for (Button button : buttons) {
@@ -433,36 +467,46 @@ private void resetGame() {
     selectedButtonIndex = 0;
 }
 
-    @FXML
-    private void switchToScoreBoardScene() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("ScoreBoardUI.fxml"));
-            Parent newRoot = loader.load();
-            ScoreBoardController scoreController = loader.getController();
-            scoreController.setGameData(playerXName, playerOName, 
-                game.getPlayerXScore(), game.getPlayerOScore(), 
-                game.getDrawScore(), gameMode, difficultyLevel);
-            Stage stage = (Stage) finishButton.getScene().getWindow();
-            stage.setScene(new Scene(newRoot));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+   @FXML
+private void switchToScoreBoardScene() {
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ScoreBoardUI.fxml"));
+        Parent newRoot = loader.load();
+        
+        ScoreBoardController scoreController = loader.getController();
+        scoreController.setGameData(playerXName, playerOName, 
+            game.getPlayerXScore(), game.getPlayerOScore(), 
+            game.getDrawScore(), gameMode, difficultyLevel);
+        
+        // Update joystick controller reference
+        JoystickManager.updateController(scoreController);
+        
+        // Get current stage and set new scene
+        Stage stage = (Stage) finishButton.getScene().getWindow();
+        stage.setScene(new Scene(newRoot));
+        
+    } catch (IOException e) {
+        e.printStackTrace();
     }
-
-    @FXML
-    private void switchToPlayerNameScene() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("StartMenuUI.fxml"));
-            Parent newRoot = loader.load();
-           
-            Stage stage = (Stage) backbutton.getScene().getWindow();
-            stage.setScene(new Scene(newRoot));
-            
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+}
+@FXML
+private void switchToPlayerNameScene() {
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("StartMenuUI.fxml"));
+        Parent newRoot = loader.load();
+        
+        // Get controller and update joystick reference
+        StartMenuUIController controller = loader.getController();
+        JoystickManager.updateController(controller);
+        
+        // Get current stage and set new scene
+        Stage stage = (Stage) backbutton.getScene().getWindow();
+        stage.setScene(new Scene(newRoot));
+        
+    } catch (IOException e) {
+        e.printStackTrace();
     }
-
+}
 @Override
 public boolean requiresSecondJoystick() {
     return !"Player vs Computer".equals(gameMode);

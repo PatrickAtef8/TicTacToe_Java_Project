@@ -10,6 +10,7 @@ import java.io.IOException;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.application.Platform;
+import javafx.scene.control.Alert;
 
 public class ModeSelectionController implements JoystickControllable {
     @FXML private Button playerVsPlayerButton;
@@ -120,22 +121,37 @@ public class ModeSelectionController implements JoystickControllable {
         switchToNextScreen();
     }
 
-    private void switchToNextScreen() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("PlayerNameEntry.fxml"));
-            Parent root = loader.load();
-            
-            PlayerNameEntryController controller = loader.getController();
-            controller.setGameMode(gameMode); // Make sure this line is present
-            App.initializeJoysticks((JoystickControllable) controller);
-            
-            Stage stage = (Stage) playerVsPlayerButton.getScene().getWindow();
-            stage.setScene(new Scene(root));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+private void switchToNextScreen() {
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("PlayerNameEntry.fxml"));
+        Parent root = loader.load();
+        
+        PlayerNameEntryController controller = loader.getController();
+        controller.setGameMode(gameMode);
+        
+        // Update the joystick controller reference
+        JoystickManager.updateController(controller);
+        
+        // Get the current stage
+        Stage stage = (Stage) playerVsPlayerButton.getScene().getWindow();
+        Scene scene = new Scene(root);
+        
+        // Set the new scene
+        stage.setScene(scene);
+        
+        // Optional: If you want to maintain the same window size
+        stage.sizeToScene();
+        
+    } catch (IOException e) {
+        e.printStackTrace();
+        // Consider showing an error message to the user
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("Failed to load screen");
+        alert.setContentText("Could not load the player name entry screen.");
+        alert.showAndWait();
     }
-
+}
  @Override
     public boolean requiresSecondJoystick() 
     {

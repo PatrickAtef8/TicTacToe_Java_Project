@@ -95,25 +95,26 @@ public class StartMenuUIController implements JoystickControllable {
         muteButton.setText(MusicController.isMuted() ? "Unmute" : "Mute");
     }
 
-    @FXML
-    private void switchToGameModeUI() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("ModeSelectionUI.fxml"));
-            Parent root = loader.load();
-            
-            JoystickControllable controller = loader.getController();
-            if (controller != null) {
-                App.initializeJoysticks(controller);
-            }
-
-            Stage stage = (Stage) startButton.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            System.err.println("Error loading ModeSelectionUI: " + e.getMessage());
-            e.printStackTrace();
-        }
+@FXML
+private void switchToGameModeUI() {
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ModeSelectionUI.fxml"));
+        Parent root = loader.load();
+        
+        // Get controller and update joystick reference
+        JoystickControllable controller = (JoystickControllable) loader.getController();
+        JoystickManager.updateController(controller);
+        
+        // Get current stage and set new scene
+        Stage stage = (Stage) startButton.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
+        
+    } catch (IOException e) {
+        System.err.println("Error loading ModeSelectionUI: " + e.getMessage());
+        e.printStackTrace();
     }
+}
 
     @FXML
     private void exitApplication() {

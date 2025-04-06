@@ -169,7 +169,7 @@ private static final String HIGHLIGHT_ADDON =
     @FXML 
     private void selectHard() { switchToGameBoard("Hard"); }
 
- private void switchToGameBoard(String difficulty) {
+private void switchToGameBoard(String difficulty) {
     try {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("GameBoardUI.fxml"));
         Parent root = loader.load();
@@ -177,8 +177,11 @@ private static final String HIGHLIGHT_ADDON =
         GameBoardController controller = loader.getController();
         // Use the stored gameMode instead of hardcoding "Player vs Computer"
         controller.setGameSettings(playerX, playerO, gameMode, difficulty);
-        App.initializeJoysticks(controller);
-
+        
+        // Update joystick controller reference
+        JoystickManager.updateController(controller);
+        
+        // Get current stage and set new scene
         Stage stage = (Stage) easyButton.getScene().getWindow();
         stage.setScene(new Scene(root));
         
@@ -187,39 +190,44 @@ private static final String HIGHLIGHT_ADDON =
     }
 }
     
-    @FXML
-    private void goBack() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("PlayerNameEntry.fxml"));
-            Parent root = loader.load();
-            
-            PlayerNameEntryController controller = loader.getController();
-            controller.setGameMode(gameMode);
-           App.initializeJoysticks((JoystickControllable) controller);
-            
-            Stage stage = (Stage) backButton.getScene().getWindow();
-            stage.setScene(new Scene(root));
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Error loading PlayerNameEntry.fxml");
-        }
+  @FXML
+private void goBack() {
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("PlayerNameEntry.fxml"));
+        Parent root = loader.load();
+        
+        PlayerNameEntryController controller = loader.getController();
+        controller.setGameMode(gameMode);
+        
+        // Update joystick controller reference
+        JoystickManager.updateController(controller);
+        
+        // Get current stage and set new scene
+        Stage stage = (Stage) backButton.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        
+    } catch (IOException e) {
+        e.printStackTrace();
     }
+}
 
-    @FXML
-    private void goHome(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("StartMenuUI.fxml"));
-            Parent root = loader.load();
-            
-            App.initializeJoysticks(loader.getController());
-            
-            Stage stage = (Stage) homeButton.getScene().getWindow();
-            stage.setScene(new Scene(root));
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Error loading StartMenuUI.fxml");
-        }
+  @FXML
+private void goHome(ActionEvent event) {
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("StartMenuUI.fxml"));
+        Parent root = loader.load();
+        
+        // Update joystick controller reference
+        JoystickManager.updateController((JoystickControllable)loader.getController());
+        
+        // Get current stage and set new scene
+        Stage stage = (Stage) homeButton.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        
+    } catch (IOException e) {
+        e.printStackTrace();
     }
+}
 
     @Override
     public boolean requiresSecondJoystick() {

@@ -275,53 +275,61 @@ private void showWarningAlert(String title, String content) {
         alert.show(); // Use show() (not showAndWait) to avoid blocking
     });
 }
-    private void switchToDifficultySelection() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("DifficultySelectionUI.fxml"));
-            Parent root = loader.load();
+  private void switchToDifficultySelection() {
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("DifficultySelectionUI.fxml"));
+        Parent root = loader.load();
 
-            DifficultySelectionController controller = loader.getController();
-            controller.setPlayerNames(playerXName.getText(), playerOName.getText());
-            controller.setGameMode(gameMode);
-            App.initializeJoysticks(controller);
-
-            Stage stage = (Stage) nextButton.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        DifficultySelectionController controller = loader.getController();
+        controller.setPlayerNames(playerXName.getText(), playerOName.getText());
+        controller.setGameMode(gameMode);
+        
+        // Update joystick controller reference
+        JoystickManager.updateController(controller);
+        
+        // Get current stage and set new scene
+        Stage stage = (Stage) nextButton.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        
+    } catch (IOException e) {
+        e.printStackTrace();
     }
+}
+private void switchToGameBoard() {
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("GameBoardUI.fxml"));
+        Parent root = loader.load();
 
-    private void switchToGameBoard() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("GameBoardUI.fxml"));
-            Parent root = loader.load();
-
-            GameBoardController controller = loader.getController();
-            controller.setGameSettings(playerXName.getText(), playerOName.getText(), "Player vs Player", "");
-            App.initializeJoysticks(controller);
-
-            Stage stage = (Stage) nextButton.getScene().getWindow();
-            stage.setScene(new Scene(root));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        GameBoardController controller = loader.getController();
+        controller.setGameSettings(playerXName.getText(), playerOName.getText(), "Player vs Player", "");
+        
+        // Update joystick controller reference
+        JoystickManager.updateController(controller);
+        
+        // Get current stage and set new scene
+        Stage stage = (Stage) nextButton.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        
+    } catch (IOException e) {
+        e.printStackTrace();
     }
-
-    @FXML
-    private void goBack() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("ModeSelectionUI.fxml"));
-            Parent root = loader.load();
-            
-            App.initializeJoysticks(loader.getController());
-            
-            Stage stage = (Stage) backButton.getScene().getWindow();
-            stage.setScene(new Scene(root));
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("❌ Error: Could not load ModeSelectionUI.fxml!");
-        }
+}
+@FXML
+private void goBack() {
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ModeSelectionUI.fxml"));
+        Parent root = loader.load();
+        
+        // Get controller and update joystick reference
+        ModeSelectionController controller = loader.getController();
+        JoystickManager.updateController(controller);
+        
+        // Get current stage and set new scene
+        Stage stage = (Stage) backButton.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        
+    } catch (IOException e) {
+        e.printStackTrace();
     }
+}
 }
