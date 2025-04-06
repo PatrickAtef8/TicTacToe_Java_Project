@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" spacing="40" style="-fx-background-color: #2B0B33; -fx-padding: 40px;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.tictactoegame.ScoreBoardController">
+<VBox alignment="CENTER" spacing="40" style="-fx-background-color: #2B0B33; -fx-padding: 40px;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.tictactoegame.controllers.ScoreBoardController">
 
     <Label fx:id="winnerLabel" style="-fx-text-fill: yellow; -fx-font-size: 60px; -fx-font-weight: bold; -fx-font-family: 'Comic Sans MS'; -fx-effect: dropshadow(gaussian, rgba(255,215,0,0.8), 10, 0, 0, 0);" text="🏆 Final Score 🏆" />
 

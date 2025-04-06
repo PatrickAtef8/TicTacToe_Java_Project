@@ -6,7 +6,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="1080.0" prefWidth="1920.0" spacing="30" style="-fx-background-color: linear-gradient(to bottom, #1C0522, #3D125F);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.tictactoegame.StartMenuUIController">
+<VBox alignment="CENTER" prefHeight="1080.0" prefWidth="1920.0" spacing="30" style="-fx-background-color: linear-gradient(to bottom, #1C0522, #3D125F);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.tictactoegame.controllers.StartMenuUIController">
 
     <!-- Empty spacer to push content vertically centered -->
     <VBox prefHeight="200.0" />

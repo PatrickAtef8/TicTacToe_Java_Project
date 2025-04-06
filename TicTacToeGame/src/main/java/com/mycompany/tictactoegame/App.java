@@ -1,5 +1,9 @@
 package com.mycompany.tictactoegame;
 
+import com.mycompany.tictactoegame.utils.MusicController;
+import com.mycompany.tictactoegame.utils.input.JoystickControllable;
+import com.mycompany.tictactoegame.utils.input.JoystickManager;
+import com.mycompany.tictactoegame.utils.input.JoystickReader;
 import java.io.File;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +18,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         MusicController.initializeMusic();        
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("StartMenuUI.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mycompany/tictactoegame/StartMenuUI.fxml"));
         Parent root = loader.load();
         
         Object controller = loader.getController();

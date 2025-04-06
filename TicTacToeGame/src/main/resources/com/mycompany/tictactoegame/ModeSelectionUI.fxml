@@ -7,7 +7,12 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane style="-fx-background-color: #5B2576" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.tictactoegame.ModeSelectionController">
+<BorderPane style="-fx-background-color: #5B2576" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.tictactoegame.controllers.ModeSelectionController">
+    
+    <!-- Top Section: Back Button -->
+    <top>
+        <HBox alignment="TOP_LEFT" style="-fx-padding: 20;" />
+    </top>
     
     <!-- Center Section: Game Mode Selection -->
     <center>
@@ -23,6 +28,7 @@
                 <VBox alignment="CENTER" spacing="20">
                     <Button fx:id="playerVsPlayerButton" onAction="#selectPlayerVsPlayer" prefHeight="60.0" prefWidth="300.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-font-size: 24px;                                     -fx-font-weight: bold; -fx-text-fill: white; -fx-font-family: 'Comic Sans MS';                                     -fx-background-color: linear-gradient(to right, #FF3333, #FF9966);                                     -fx-effect: dropshadow(gaussian, rgba(255,69,0,0.7), 20, 0, 0, 0);                                     -fx-padding: 15 40;" text="Multiplayer" />
                 </VBox>
+                  <Button fx:id="backButton" onAction="#goBack" prefHeight="45.0" prefWidth="132.0" style="-fx-background-radius: 20; -fx-border-radius: 20;                    -fx-font-size: 18px; -fx-font-weight: bold;                    -fx-text-fill: white; -fx-font-family: 'Comic Sans MS';                    -fx-background-color: linear-gradient(to right, #8e44ad, #6C3483);                    -fx-effect: dropshadow(gaussian, rgba(142,68,173,0.8), 15, 0, 0, 0);                    -fx-padding: 10 20;" text="⬅ Back" />
 
             </VBox>
         </StackPane>

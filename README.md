@@ -33,3 +33,49 @@ The application consists of **five UI screens**:
 - Enhances joystick controls
 
 **Progress is ongoing, stay tuned!** 🚀
+
+
+# 🎮 Tic-Tac-Toe JavaFX Game
+
+[![Java](https://img.shields.io/badge/Java-17%2B-blue)](https://openjdk.org/)
+[![JavaFX](https://img.shields.io/badge/JavaFX-19-purple)](https://openjfx.io/)
+[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
+
+A feature-rich Tic-Tac-Toe game with JavaFX, supporting joystick input, sound effects, and multiple game modes.
+
+![Game Screenshot](screenshots/gameplay.gif) *(Add your screenshot later)*
+
+## ✨ Features
+
+- **Game Modes**
+  - Player vs Player (Local)
+  - Player vs Computer (AI)
+- **Immersive UX**
+  - Virtual keyboard for name entry
+  - Animated win/draw effects (confetti, glowing tiles)
+  - Sound effects (place X/O, win/lose, background music)
+- **Input Support**
+  - Mouse/touch controls
+  - **Joystick/Gamepad** integration
+- **Clean Architecture**
+  - MVC pattern with FXML
+  - Separated game logic (`model/`) from UI (`controllers/`)
+
+## 🛠️ Technologies
+
+- **Core**: Java 17+
+- **UI**: JavaFX 19
+- **Build**: Maven
+- **Audio**: JavaFX `MediaPlayer`
+- **Input**: JInput (Joystick)
+
+## 📦 Installation
+
+### Prerequisites
+- JDK 17+
+- Maven 3.8+
+
+### Steps
+1. Clone the repo:
+   ```bash
+   git clone https://github.com/PatrickAtef8/TicTacToe_Java_Project.git
