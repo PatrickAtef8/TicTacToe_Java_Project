@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<GridPane fx:id="keyboard" hgap="10" vgap="10" alignment="CENTER" 
+    xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" 
+    fx:controller="com.mycompany.tictactoegame.VirtualKeyboardController"
+    prefHeight="350.0" prefWidth="850.0" style="-fx-background-color: #2B0B33;">
+
+  
+    
+    <!-- Row 1 -->
+    <Button fx:id="buttonA" text="a" onAction="#addCharacter" style="-fx-font-size: 30px; -fx-padding: 15px; -fx-background-color: silver; -fx-text-fill: black; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 2);" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+    <Button fx:id="buttonB" text="b" onAction="#addCharacter" style="-fx-font-size: 30px; -fx-padding: 15px; -fx-background-color: silver; -fx-text-fill: black; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 2);" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+    <Button fx:id="buttonC" text="c" onAction="#addCharacter" style="-fx-font-size: 30px; -fx-padding: 15px; -fx-background-color: silver; -fx-text-fill: black; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 2);" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+    <Button fx:id="buttonD" text="d" onAction="#addCharacter" style="-fx-font-size: 30px; -fx-padding: 15px; -fx-background-color: silver; -fx-text-fill: black; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 2);" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+    <Button fx:id="buttonE" text="e" onAction="#addCharacter" style="-fx-font-size: 30px; -fx-padding: 15px; -fx-background-color: silver; -fx-text-fill: black; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 2);" GridPane.rowIndex="0" GridPane.columnIndex="4"/>
+    <Button fx:id="buttonF" text="f" onAction="#addCharacter" style="-fx-font-size: 30px; -fx-padding: 15px; -fx-background-color: silver; -fx-text-fill: black; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 2);" GridPane.rowIndex="0" GridPane.columnIndex="5"/>
+    <Button fx:id="buttonG" text="g" onAction="#addCharacter" style="-fx-font-size: 30px; -fx-padding: 15px; -fx-background-color: silver; -fx-text-fill: black; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 2);" GridPane.rowIndex="0" GridPane.columnIndex="6"/>
+    <Button fx:id="buttonH" text="h" onAction="#addCharacter" style="-fx-font-size: 30px; -fx-padding: 15px; -fx-background-color: silver; -fx-text-fill: black; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 2);" GridPane.rowIndex="0" GridPane.columnIndex="7"/>
+    <Button fx:id="buttonI" text="i" onAction="#addCharacter" style="-fx-font-size: 30px; -fx-padding: 15px; -fx-background-color: silver; -fx-text-fill: black; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 2);" GridPane.rowIndex="0" GridPane.columnIndex="8"/>
+    <Button fx:id="buttonJ" text="j" onAction="#addCharacter" style="-fx-font-size: 30px; -fx-padding: 15px; -fx-background-color: silver; -fx-text-fill: black; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 2);" GridPane.rowIndex="0" GridPane.columnIndex="9"/>
+
+    <!-- Row 2 -->
+    <Button fx:id="buttonK" text="k" onAction="#addCharacter" style="-fx-font-size: 30px; -fx-padding: 15px; -fx-background-color: silver; -fx-text-fill: black; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 2);" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+    <Button fx:id="buttonL" text="l" onAction="#addCharacter" style="-fx-font-size: 30px; -fx-padding: 15px; -fx-background-color: silver; -fx-text-fill: black; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 2);" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+    <Button fx:id="buttonM" text="m" onAction="#addCharacter" style="-fx-font-size: 30px; -fx-padding: 15px; -fx-background-color: silver; -fx-text-fill: black; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 2);" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+    <Button fx:id="buttonN" text="n" onAction="#addCharacter" style="-fx-font-size: 30px; -fx-padding: 15px; -fx-background-color: silver; -fx-text-fill: black; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 2);" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+    <Button fx:id="buttonO" text="o" onAction="#addCharacter" style="-fx-font-size: 30px; -fx-padding: 15px; -fx-background-color: silver; -fx-text-fill: black; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 2);" GridPane.rowIndex="1" GridPane.columnIndex="4"/>
+    <Button fx:id="buttonP" text="p" onAction="#addCharacter" style="-fx-font-size: 30px; -fx-padding: 15px; -fx-background-color: silver; -fx-text-fill: black; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 2);" GridPane.rowIndex="1" GridPane.columnIndex="5"/>
+    <Button fx:id="buttonQ" text="q" onAction="#addCharacter" style="-fx-font-size: 30px; -fx-padding: 15px; -fx-background-color: silver; -fx-text-fill: black; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 2);" GridPane.rowIndex="1" GridPane.columnIndex="6"/>
+    <Button fx:id="buttonR" text="r" onAction="#addCharacter" style="-fx-font-size: 30px; -fx-padding: 15px; -fx-background-color: silver; -fx-text-fill: black; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 2);" GridPane.rowIndex="1" GridPane.columnIndex="7"/>
+    <Button fx:id="buttonS" text="s" onAction="#addCharacter" style="-fx-font-size: 30px; -fx-padding: 15px; -fx-background-color: silver; -fx-text-fill: black; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 2);" GridPane.rowIndex="1" GridPane.columnIndex="8"/>
+    <Button fx:id="buttonT" text="t" onAction="#addCharacter" style="-fx-font-size: 30px; -fx-padding: 15px; -fx-background-color: silver; -fx-text-fill: black; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 2);" GridPane.rowIndex="1" GridPane.columnIndex="9"/>
+
+    <!-- Row 3 -->
+    <Button fx:id="buttonU" text="u" onAction="#addCharacter" style="-fx-font-size: 30px; -fx-padding: 15px; -fx-background-color: silver; -fx-text-fill: black; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 2);" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+    <Button fx:id="buttonV" text="v" onAction="#addCharacter" style="-fx-font-size: 30px; -fx-padding: 15px; -fx-background-color: silver; -fx-text-fill: black; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 2);" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+    <Button fx:id="buttonW" text="w" onAction="#addCharacter" style="-fx-font-size: 30px; -fx-padding: 15px; -fx-background-color: silver; -fx-text-fill: black; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 2);" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+    <Button fx:id="buttonX" text="x" onAction="#addCharacter" style="-fx-font-size: 30px; -fx-padding: 15px; -fx-background-color: silver; -fx-text-fill: black; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 2);" GridPane.rowIndex="2" GridPane.columnIndex="3"/>
+    <Button fx:id="buttonY" text="y" onAction="#addCharacter" style="-fx-font-size: 30px; -fx-padding: 15px; -fx-background-color: silver; -fx-text-fill: black; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 2);" GridPane.rowIndex="2" GridPane.columnIndex="4"/>
+    <Button fx:id="buttonZ" text="z" onAction="#addCharacter" style="-fx-font-size: 30px; -fx-padding: 15px; -fx-background-color: silver; -fx-text-fill: black; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 2);" GridPane.rowIndex="2" GridPane.columnIndex="5"/>
+
+    <!-- Row 4 -->
+    <Button fx:id="buttonSpace" text="Space" onAction="#addCharacter" style="-fx-font-size: 30px; -fx-padding: 15px; -fx-background-color: silver; -fx-text-fill: black; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 2);" GridPane.columnSpan="6" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+    <Button fx:id="buttonBackspace" text="Backspace" onAction="#removeCharacter" style="-fx-font-size: 30px; -fx-padding: 15px; -fx-background-color: silver; -fx-text-fill: black; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 2);" GridPane.rowIndex="3" GridPane.columnIndex="6"/>
+<!-- Add this to Row 4, between Backspace and OK buttons -->
+<Button fx:id="buttonCaps" text="Caps" onAction="#toggleCapsLock" 
+        style="-fx-font-size: 30px; -fx-padding: 15px; -fx-background-color: #FFA500; -fx-text-fill: black; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 2);" 
+        GridPane.rowIndex="3" GridPane.columnIndex="7" GridPane.columnSpan="2"/>
+
+<!-- Update the OK button's columnIndex to 9 to make space for Caps Lock -->
+<Button fx:id="buttonOK" text="OK" onAction="#closeKeyboard" 
+        style="-fx-font-size: 30px; -fx-padding: 15px; -fx-background-color: #4CAF50; -fx-text-fill: white; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 2);" 
+        GridPane.rowIndex="3" GridPane.columnIndex="9" GridPane.columnSpan="1"/>
+</GridPane>

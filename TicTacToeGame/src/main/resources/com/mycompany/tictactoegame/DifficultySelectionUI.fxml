@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane style="-fx-background-color: #5B2576;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.tictactoegame.DifficultySelectionController">
+
+    <!-- Center Section: Difficulty Selection -->
+    <center>
+        <StackPane alignment="CENTER" style="-fx-padding: 40;">
+            <VBox alignment="CENTER" spacing="35" style="-fx-background-color: #2B0B33; -fx-background-radius: 30; -fx-padding: 40;">
+                
+                <!-- Title -->
+                <Label fx:id="winnerLabel" style="-fx-text-fill: yellow; -fx-font-size: 50px; -fx-font-weight: bold;                               -fx-font-family: 'Comic Sans MS'; -fx-effect: dropshadow(gaussian, rgba(255,215,0,0.8), 10, 0, 0, 0);" text="Select Difficulty" />
+                
+                <!-- Difficulty Buttons -->
+                <VBox alignment="CENTER" spacing="20">
+                    <Button fx:id="easyButton" onAction="#selectEasy" prefHeight="60.0" prefWidth="300.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-font-size: 24px;                                    -fx-font-weight: bold; -fx-text-fill: white; -fx-font-family: 'Comic Sans MS';                                    -fx-background-color: linear-gradient(to right, #2ecc71, #27ae60);                                    -fx-effect: dropshadow(gaussian, rgba(46,204,113,0.7), 20, 0, 0, 0);                                    -fx-padding: 15 40;" text="Easy" />
+
+                    <Button fx:id="mediumButton" onAction="#selectMedium" prefHeight="60.0" prefWidth="300.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-font-size: 24px;                                    -fx-font-weight: bold; -fx-text-fill: white; -fx-font-family: 'Comic Sans MS';                                    -fx-background-color: linear-gradient(to right, #f1c40f, #f39c12);                                    -fx-effect: dropshadow(gaussian, rgba(243,156,18,0.7), 20, 0, 0, 0);                                    -fx-padding: 15 40;" text="Medium" />
+
+                    <Button fx:id="hardButton" onAction="#selectHard" prefHeight="60.0" prefWidth="300.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-font-size: 24px;                                    -fx-font-weight: bold; -fx-text-fill: white; -fx-font-family: 'Comic Sans MS';                                    -fx-background-color: linear-gradient(to right, #e74c3c, #c0392b);                                    -fx-effect: dropshadow(gaussian, rgba(231,76,60,0.7), 20, 0, 0, 0);                                    -fx-padding: 15 40;" text="Hard" />
+                </VBox>
+
+   <HBox alignment="CENTER" spacing="20">
+    <Button fx:id="backButton" onAction="#goBack" prefHeight="45.0" prefWidth="132.0" style="-fx-background-radius: 20; -fx-border-radius: 20;                    -fx-font-size: 18px; -fx-font-weight: bold;                    -fx-text-fill: white; -fx-font-family: 'Comic Sans MS';                    -fx-background-color: linear-gradient(to right, #8e44ad, #6C3483);                    -fx-effect: dropshadow(gaussian, rgba(142,68,173,0.8), 15, 0, 0, 0);                    -fx-padding: 10 20;" text="⬅ Back" />
+
+    <Button fx:id="homeButton" onAction="#goHome" prefHeight="45.0" prefWidth="142.0" style="-fx-background-radius: 20; -fx-border-radius: 20;                    -fx-font-size: 18px; -fx-font-weight: bold;                    -fx-text-fill: white; -fx-font-family: 'Comic Sans MS';                    -fx-background-color: linear-gradient(to right, #9b59b6, #7D3C98);                    -fx-effect: dropshadow(gaussian, rgba(155,89,182,0.8), 15, 0, 0, 0);                    -fx-padding: 10 20;" text="🏠 Home" />
+</HBox>
+
+
+            </VBox>
+        </StackPane>
+    </center>
+
+    <!-- Bottom Section: Title Animation -->
+    <bottom>
+        <VBox alignment="CENTER" spacing="15" style="-fx-padding: 20;">
+            <HBox alignment="CENTER" spacing="10">
+                <Label fx:id="ticLabel" style="-fx-text-fill: yellow; -fx-font-size: 50px;                       -fx-font-weight: bold; -fx-font-family: 'Comic Sans MS';                       -fx-effect: dropshadow(gaussian, rgba(255,215,0,0.8), 10, 0, 0, 0);" text="Tic." />
+                <Label fx:id="tacLabel" style="-fx-text-fill: deepskyblue; -fx-font-size: 50px;                       -fx-font-weight: bold; -fx-font-family: 'Comic Sans MS';                       -fx-effect: dropshadow(gaussian, rgba(0,191,255,0.8), 10, 0, 0, 0);" text="Tac." />
+                <Label fx:id="toeLabel" style="-fx-text-fill: yellow; -fx-font-size: 50px;                       -fx-font-weight: bold; -fx-font-family: 'Comic Sans MS';                       -fx-effect: dropshadow(gaussian, rgba(255,215,0,0.8), 10, 0, 0, 0);" text="Toe." />
+            </HBox>
+        </VBox>
+    </bottom>
+
+</BorderPane>
