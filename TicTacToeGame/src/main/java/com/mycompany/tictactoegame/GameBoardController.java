@@ -326,11 +326,13 @@ private void updateActionButtonSelection() {
         ticLabel.setText("💔");
         tacLabel.setText("Oops,");
         toeLabel.setText("Try Again!");
+        MusicController.playSound("lose");
     } else {
         winnerLabel.setText("🎉 Winner: " + winnerName + "! 🎉");
         ticLabel.setText("🎊");
         tacLabel.setText("Congrats,");
         toeLabel.setText(winnerName + "! 🎊");
+        MusicController.playSound("win");
     }
 
     winnerLabel.setVisible(true);

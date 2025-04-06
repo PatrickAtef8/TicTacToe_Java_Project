@@ -35,7 +35,7 @@ public class ModeSelectionController implements JoystickControllable {
         @FXML
     public void initialize() 
     {
-        buttons = new Button[]{playerVsPlayerButton, playerVsComputerButton};
+        buttons = new Button[]{playerVsComputerButton, playerVsPlayerButton};
         
         // Store original styles
         for (Button button : buttons) 
@@ -68,7 +68,7 @@ public class ModeSelectionController implements JoystickControllable {
                     selectedButtonIndex--;
                     updateSelection();
                 } 
-                else if (value == 32767 && selectedButtonIndex < buttons.length - 1) 
+                else if (value == 32767 & selectedButtonIndex < buttons.length - 1) 
                 {
                     selectedButtonIndex++;
                     updateSelection();
