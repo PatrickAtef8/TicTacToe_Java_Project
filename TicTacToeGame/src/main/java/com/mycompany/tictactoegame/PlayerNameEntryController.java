@@ -218,6 +218,7 @@ private void openVirtualKeyboard(TextField targetField) {
 
     @FXML
     private void goToNextScreen() {
+        MusicController.playSound(MusicController.SOUND_CLICK);
         String playerX = playerXName.getText().trim();
         String playerO = playerOName.getText().trim();
 
@@ -312,6 +313,7 @@ private void showWarningAlert(String title, String content) {
     @FXML
     private void goBack() {
         try {
+            MusicController.playSound(MusicController.SOUND_CLICK);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("ModeSelectionUI.fxml"));
             Parent root = loader.load();
             

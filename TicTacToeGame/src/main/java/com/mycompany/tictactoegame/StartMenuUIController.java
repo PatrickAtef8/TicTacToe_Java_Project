@@ -98,6 +98,7 @@ public class StartMenuUIController implements JoystickControllable {
     @FXML
     private void switchToGameModeUI() {
         try {
+            MusicController.playSound(MusicController.SOUND_CLICK);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("ModeSelectionUI.fxml"));
             Parent root = loader.load();
             
@@ -117,6 +118,7 @@ public class StartMenuUIController implements JoystickControllable {
 
     @FXML
     private void exitApplication() {
+        MusicController.playSound(MusicController.SOUND_CLICK);
         MusicController.cleanup();
         System.exit(0);
     }
@@ -128,6 +130,7 @@ public class StartMenuUIController implements JoystickControllable {
 
   @FXML
 private void toggleMute() {
+    MusicController.playSound(MusicController.SOUND_CLICK);
     MusicController.toggleMute();
     updateMuteButton();
 }

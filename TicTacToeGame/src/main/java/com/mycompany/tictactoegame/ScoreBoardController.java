@@ -135,6 +135,7 @@ public class ScoreBoardController implements JoystickControllable {
     @FXML
     private void switchToGameBoardScene() {
         try {
+            MusicController.playSound(MusicController.SOUND_CLICK);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("GameBoardUI.fxml"));
             Parent root = loader.load();
             GameBoardController gameController = loader.getController();
@@ -150,12 +151,14 @@ public class ScoreBoardController implements JoystickControllable {
 
     @FXML
     private void exitApplication() {
+        MusicController.playSound(MusicController.SOUND_CLICK);
         System.exit(0);
     }
 
     @FXML
     private void goHome(ActionEvent event) {
         try {
+            MusicController.playSound(MusicController.SOUND_CLICK);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("StartMenuUI.fxml"));
             Parent root = loader.load();
             App.initializeJoysticks(loader.getController());

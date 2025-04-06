@@ -161,13 +161,19 @@ private static final String HIGHLIGHT_ADDON =
     }
 
     @FXML 
-    private void selectEasy() { switchToGameBoard("Easy"); }
+    private void selectEasy() { 
+        MusicController.playSound(MusicController.SOUND_CLICK);
+        switchToGameBoard("Easy"); }
     
     @FXML 
-    private void selectMedium() { switchToGameBoard("Medium"); }
+    private void selectMedium() { 
+        MusicController.playSound(MusicController.SOUND_CLICK);
+        switchToGameBoard("Medium"); }
     
     @FXML 
-    private void selectHard() { switchToGameBoard("Hard"); }
+    private void selectHard() { 
+        MusicController.playSound(MusicController.SOUND_CLICK);
+        switchToGameBoard("Hard"); }
 
  private void switchToGameBoard(String difficulty) {
     try {
@@ -190,6 +196,7 @@ private static final String HIGHLIGHT_ADDON =
     @FXML
     private void goBack() {
         try {
+            MusicController.playSound(MusicController.SOUND_CLICK);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("PlayerNameEntry.fxml"));
             Parent root = loader.load();
             
@@ -208,6 +215,7 @@ private static final String HIGHLIGHT_ADDON =
     @FXML
     private void goHome(ActionEvent event) {
         try {
+            MusicController.playSound(MusicController.SOUND_CLICK);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("StartMenuUI.fxml"));
             Parent root = loader.load();
             

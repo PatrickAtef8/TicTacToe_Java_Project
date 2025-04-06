@@ -229,6 +229,14 @@ private void updateActionButtonSelection() {
     private void handleCellClick(Button cell, int row, int col) {
         if (game.isGameOver() || !cell.getText().isEmpty()) return;
 
+        
+            // Play sound based on current player
+    if (game.getCurrentPlayer().equals("X")) {
+        MusicController.playSound(MusicController.SOUND_PLACE_X);
+    } else {
+        MusicController.playSound(MusicController.SOUND_PLACE_O);
+    }
+    
         animateButton(cell);
         cell.setText(game.getCurrentPlayer());
 
@@ -260,7 +268,7 @@ private void updateActionButtonSelection() {
         int row = move[0];
         int col = move[1];
         Button cell = board[row][col];
-        
+        MusicController.playSound(MusicController.SOUND_CLICK);
         animateButton(cell);
         cell.setText(game.getCurrentPlayer());
 
@@ -317,33 +325,31 @@ private void updateActionButtonSelection() {
         }
     }
 
- private void showWinnerLabel() {
+private void showWinnerLabel() {
     String winnerSymbol = game.getCurrentPlayer();
     String winnerName = winnerSymbol.equals("X") ? playerXName : playerOName;
 
     if ("Player vs Computer".equals(gameMode) && "Computer⚡".equals(winnerName)) {
+        MusicController.playSound(MusicController.SOUND_LOSE); // Only play this once
         winnerLabel.setText("😢 You Lost! Better luck next time!");
         ticLabel.setText("💔");
         tacLabel.setText("Oops,");
         toeLabel.setText("Try Again!");
-        MusicController.playSound("lose");
     } else {
+        MusicController.playSound(MusicController.SOUND_WIN); // Only play this once
         winnerLabel.setText("🎉 Winner: " + winnerName + "! 🎉");
         ticLabel.setText("🎊");
         tacLabel.setText("Congrats,");
         toeLabel.setText(winnerName + "! 🎊");
-        MusicController.playSound("win");
     }
 
     winnerLabel.setVisible(true);
     animateWinnerLabel();
     
-    // Automatically switch to action menu when game ends
     inActionMenu = true;
     selectedButtonIndex = 0;
     updateActionButtonSelection();
     
-    // Disable board navigation
     joystickEnabled[0] = false;
     joystickEnabled[1] = false;
 }
@@ -386,6 +392,7 @@ private void updateActionButtonSelection() {
 
 
 private void showDrawMessage() {
+    MusicController.playSound(MusicController.SOUND_DRAW);
     winnerLabel.setText("🤝 It's a Draw! 🤝");
     winnerLabel.setVisible(true);
     animateWinnerLabel();
@@ -404,6 +411,8 @@ private void resetGame() {
     if (winnerAnimation != null) {
         winnerAnimation.stop();
     }
+    
+    MusicController.playSound(MusicController.SOUND_CLICK);
     game.resetBoard();
     winnerLabel.setVisible(false);
     ticLabel.setText("Tic.");
@@ -436,6 +445,7 @@ private void resetGame() {
     @FXML
     private void switchToScoreBoardScene() {
         try {
+            MusicController.playSound(MusicController.SOUND_CLICK);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("ScoreBoardUI.fxml"));
             Parent newRoot = loader.load();
             ScoreBoardController scoreController = loader.getController();
@@ -452,6 +462,7 @@ private void resetGame() {
     @FXML
     private void switchToPlayerNameScene() {
         try {
+            MusicController.playSound(MusicController.SOUND_CLICK);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("StartMenuUI.fxml"));
             Parent newRoot = loader.load();
            

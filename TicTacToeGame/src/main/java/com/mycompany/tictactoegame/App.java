@@ -13,7 +13,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         
-                MusicController.initializeMusic();        
+        MusicController.initialize();       
         FXMLLoader loader = new FXMLLoader(getClass().getResource("StartMenuUI.fxml"));
         Parent root = loader.load();
         

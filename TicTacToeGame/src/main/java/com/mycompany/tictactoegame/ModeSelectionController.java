@@ -14,6 +14,7 @@ import javafx.application.Platform;
 public class ModeSelectionController implements JoystickControllable {
     @FXML private Button playerVsPlayerButton;
     @FXML private Button playerVsComputerButton;
+    @FXML private Button backButton;
     @FXML private Label ticLabel;
     @FXML private Label tacLabel;
     @FXML private Label toeLabel;
@@ -31,11 +32,11 @@ public class ModeSelectionController implements JoystickControllable {
     "-fx-border-style: solid outside;" +
     "-fx-effect: dropshadow(gaussian, rgba(241,196,15,0.7), 15, 0.5, 0, 0), " +
     "            innershadow(gaussian, rgba(255,255,255,0.3), 5, 0.5, 0, 0);";  // Gold glow + inner shine
+   
 
-        @FXML
     public void initialize() 
     {
-        buttons = new Button[]{playerVsComputerButton, playerVsPlayerButton};
+        buttons = new Button[]{playerVsComputerButton, playerVsPlayerButton, backButton};
         
         // Store original styles
         for (Button button : buttons) 
@@ -109,19 +110,51 @@ public class ModeSelectionController implements JoystickControllable {
     } 
 
     @FXML
-    private void selectPlayerVsPlayer() {
+    private void selectPlayerVsPlayer() 
+    {
+        MusicController.playSound(MusicController.SOUND_CLICK);
+
         gameMode = "Player vs Player";
         switchToNextScreen();
     }
 
     @FXML
-    private void selectPlayerVsComputer() {
+    private void selectPlayerVsComputer() 
+    {
+        MusicController.playSound(MusicController.SOUND_CLICK);
         gameMode = "Player vs Computer";
         switchToNextScreen();
     }
+    
+    @FXML
+    private void switchBackToStartMenu()
+    {
+        try 
+        {
+            MusicController.playSound(MusicController.SOUND_CLICK);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("StartMenuUI.fxml"));
+            Parent root = loader.load();
 
-    private void switchToNextScreen() {
-        try {
+            // Get controller and initialize joysticks if needed
+            StartMenuUIController controller = loader.getController();
+            App.initializeJoysticks((JoystickControllable) controller);
+
+            Stage stage = (Stage) backButton.getScene().getWindow();
+            stage.setScene(new Scene(root));
+        } 
+        catch (IOException e) 
+        {
+            e.printStackTrace();
+            System.err.println("Error loading StartMenuUI.fxml");
+        }
+    }
+
+
+    private void switchToNextScreen() 
+    {
+        try 
+        {
+            
             FXMLLoader loader = new FXMLLoader(getClass().getResource("PlayerNameEntry.fxml"));
             Parent root = loader.load();
             
@@ -131,7 +164,8 @@ public class ModeSelectionController implements JoystickControllable {
             
             Stage stage = (Stage) playerVsPlayerButton.getScene().getWindow();
             stage.setScene(new Scene(root));
-        } catch (IOException e) {
+        } catch (IOException e) 
+        {
             e.printStackTrace();
         }
     }
