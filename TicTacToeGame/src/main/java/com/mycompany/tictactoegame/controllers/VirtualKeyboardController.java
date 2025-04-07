@@ -2,6 +2,7 @@ package com.mycompany.tictactoegame.controllers;
 
 import com.mycompany.tictactoegame.utils.MusicController;
 import com.mycompany.tictactoegame.utils.input.JoystickControllable;
+import com.mycompany.tictactoegame.utils.input.JoystickManager;
 import com.mycompany.tictactoegame.utils.input.JoystickReader;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -63,6 +64,7 @@ public void initialize() {
     
     // Set initial focus when the keyboard loads
     setInitialFocus();
+    JoystickManager.updateController(this);
 }
     
     @FXML
@@ -235,7 +237,7 @@ private void updateFocus() {
     }
      @Override
     public boolean requiresSecondJoystick() {
-        return false;
+        return true;
     }
     
     

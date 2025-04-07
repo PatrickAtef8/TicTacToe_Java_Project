@@ -10,7 +10,7 @@ public class MusicController {
     private static volatile boolean isMuted = false;
 
     // Sound effect constants
-    public static final String SOUND_CLICK = "click";
+    public static final String SOUND_CLICK = "placeX";
     public static final String SOUND_PLACE_X = "placeX";
     public static final String SOUND_PLACE_O = "placeO";
     public static final String SOUND_WIN = "win";
