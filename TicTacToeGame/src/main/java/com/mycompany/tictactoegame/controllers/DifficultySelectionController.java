@@ -18,6 +18,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 public class DifficultySelectionController implements JoystickControllable {
+    
     @FXML private Button easyButton;
     @FXML private Button mediumButton;
     @FXML private Button hardButton;

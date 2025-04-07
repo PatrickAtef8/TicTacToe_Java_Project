@@ -31,7 +31,7 @@ public class JoystickManager {
             }
         }, POLL_INTERVAL, POLL_INTERVAL);
     }
-    
+     
     public static void updateController(JoystickControllable controller) {
         currentController = controller;
         if (App.getPrimaryJoystickReader() != null) {

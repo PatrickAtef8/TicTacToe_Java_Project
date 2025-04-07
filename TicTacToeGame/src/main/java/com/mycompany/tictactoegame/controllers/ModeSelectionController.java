@@ -18,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 
 public class ModeSelectionController implements JoystickControllable {
+    
     @FXML private Button playerVsPlayerButton;
     @FXML private Button playerVsComputerButton;
     @FXML private Label ticLabel;

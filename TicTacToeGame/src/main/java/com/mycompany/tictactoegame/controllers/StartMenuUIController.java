@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import javafx.application.Platform;
 
 public class StartMenuUIController implements JoystickControllable {
+    
     @FXML private Button startButton;
     @FXML private Button quitButton;
     @FXML private Button muteButton;
