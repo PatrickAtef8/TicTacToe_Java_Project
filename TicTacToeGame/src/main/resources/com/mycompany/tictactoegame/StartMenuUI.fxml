@@ -29,6 +29,5 @@
 
     <!-- Empty spacer to balance vertical centering -->
     <VBox prefHeight="200.0" />
-<Button fx:id="muteButton" onAction="#toggleMute" prefHeight="50.0" prefWidth="166.0" style="-fx-background-color: linear-gradient(to right, #9B59B6, #3498DB);                -fx-text-fill: white;                 -fx-font-size: 22px;                 -fx-font-family: 'Comic Sans MS';                -fx-font-weight: bold;                -fx-padding: 12px 30px;                 -fx-background-radius: 25px;                 -fx-border-radius: 25px;                -fx-effect: dropshadow(gaussian, rgba(155,89,182,0.8), 15, 0, 0, 0);" text="Mute" />
+<Button fx:id="muteButton" onAction="#toggleMute" prefHeight="50.0" prefWidth="210.0" style="-fx-background-color: linear-gradient(to right, #9B59B6, #3498DB);                -fx-text-fill: white;                 -fx-font-size: 22px;                 -fx-font-family: 'Comic Sans MS';                -fx-font-weight: bold;                -fx-padding: 12px 30px;                 -fx-background-radius: 25px;                 -fx-border-radius: 25px;                -fx-effect: dropshadow(gaussian, rgba(155,89,182,0.8), 15, 0, 0, 0);" text="🔈 Mute" />
 </VBox>
-

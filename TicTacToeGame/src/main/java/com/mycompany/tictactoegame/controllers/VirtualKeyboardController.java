@@ -64,7 +64,7 @@ public void initialize() {
     
     // Set initial focus when the keyboard loads
     setInitialFocus();
-    JoystickManager.updateController(this);
+//    JoystickManager.updateController(this);
 }
     
     @FXML

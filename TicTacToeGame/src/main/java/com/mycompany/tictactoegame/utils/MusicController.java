@@ -23,7 +23,7 @@ public class MusicController {
             String bgMusicPath = MusicController.class.getResource("/audio/background_music.mp3").toString();
             backgroundPlayer = new MediaPlayer(new Media(bgMusicPath));
             backgroundPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-            backgroundPlayer.setVolume(0.3); // Lower volume for background
+            backgroundPlayer.setVolume(7); 
             
             // Load all sound effects
             loadSoundEffect(SOUND_CLICK, "/audio/click.mp3");
