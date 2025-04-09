@@ -97,11 +97,11 @@ graph TD
 
 👥 Contributors
 
-    Patrick Atef - Game Logic & AI
+    Patrick Atef 
 
-    Yasmeen Yasser - UI/UX Design
+    Yasmeen Yasser 
 
-    Abdallah Salah - Joystick Integration
+    Abdallah Salah 
 
 🔜 Roadmap
 
