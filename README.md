@@ -1,35 +1,114 @@
-# TicToeTacGame
+# TicTacToe Game with Joystick Support
 
-## Contributors
-- **Patrick Atef**
-- **Yasmeen Yasser**
-- **Abdallah Salah**
+![Game Screenshot](xo.png) 
 
-## Overview
-TicToeTacGame is a Java-based Tic-Tac-Toe game that utilizes **JavaFX** for the UI and supports **joystick interfacing** for gameplay. The project includes multiple game modes, AI difficulty levels, and a score-saving system. Future enhancements include **client-server architecture** for online gameplay.
+## 🎮 Project Overview
+A modern JavaFX implementation of Tic-Tac-Toe featuring **joystick hardware integration** and AI opponents with multiple difficulty levels. Designed for both casual play and technical demonstration of Java hardware interfacing.
 
-## Features
-### Software (Java Logic)
-- Supports single-player mode with an AI opponent
-- Allows multiplayer mode (local & online in future updates)
-- Provides AI difficulty selection
-- Tracks and saves scores
+## ✨ Key Features
 
-### UI (JavaFX)
-The application consists of **five UI screens**:
-1. **Main Menu** - Displays a welcome screen
-2. **Mode Selection** - Provides options for single-player or multiplayer
-3. **AI Difficulty Selection** - Appears when playing against AI
-4. **Game UI** - Manages the main gameplay interface
-5. **Score UI** - Saves and displays scores
+### 🖥️ Software Architecture
+- **MVC Pattern** with clean separation of:
+  - **Model**: `GameLogic.java` handles game state and AI
+  - **View**: FXML files for all UI screens
+  - **Controller**: Dedicated controllers for each view
+- **Joystick API**:
+  - Real-time device polling (`/dev/input/js*`)
+  - Hotplug detection
+  - Event routing to active controllers
 
-### Hardware (Joystick Interfacing)
-- Supports gameplay using **joysticks** alongside standard input controls
-- Interfaces with Java for a seamless experience
+### 🎨 UI Components
+| Screen | Description |
+|--------|-------------|
+| **Start Menu** | Game entry point with play/exit options |
+| **Mode Selection** | PvP (local) vs PvC (AI) selection |
+| **Difficulty Selection** | Easy/Medium/Hard AI levels |
+| **Player Setup** | Name entry with virtual keyboard |
+| **Game Board** | Interactive 3x3 grid with joystick support |
+| **Score Board** | Results display with rematch option |
 
-## Future Updates
-- Adds online multiplayer with client-server architecture
-- Improves AI for a better single-player experience
-- Enhances joystick controls
+### 🤖 AI Implementation
+- **Minimax algorithm** with difficulty modifiers:
+  - Easy: Random moves
+  - Medium: Basic strategy
+  - Hard: Unbeatable AI
 
-**Progress is ongoing, stay tuned!** 🚀
+### 🕹️ Joystick Integration
+```java
+public interface JoystickControllable {
+    void handleJoystickMove(int joystickId, int axis, int value);
+    void handleJoystickPress(int joystickId, int button);
+    boolean requiresSecondJoystick();
+}
+```
+
+   * Supports multiple joysticks
+
+   * Visual feedback for device connection/disconnection
+
+🛠️ Technical Stack
+
+    Java 17 with JavaFX
+
+    Linux input subsystem (/dev/input/js*)
+
+    Gradle build system
+
+🚀 Getting Started
+Prerequisites
+
+    Linux OS (for joystick support)
+
+    Java 17 JDK
+
+    Gradle 7+
+
+Installation
+``` bash
+
+git clone https://github.com/your-repo/TicToeTacGame.git
+cd TicToeTacGame
+gradle run
+```
+
+Joystick Setup
+
+    Connect your gamepad/joystick
+
+    Ensure proper permissions for /dev/input/js*
+
+    Launch the game - automatic detection enabled
+
+📜 Game Flow
+```mermaid
+
+
+graph TD
+    A[Start Menu] --> B[Mode Selection]
+    B --> C{PvP?}
+    C -->|Yes| D[Player Setup]
+    C -->|No| E[AI Difficulty]
+    E --> D
+    D --> F[Game Board]
+    F --> G[Score Board]
+    G --> F
+    G --> A
+```
+
+👥 Contributors
+
+    Patrick Atef - Game Logic & AI
+
+    Yasmeen Yasser - UI/UX Design
+
+    Abdallah Salah - Joystick Integration
+
+🔜 Roadmap
+
+    Online multiplayer support
+
+    Enhanced AI personality profiles
+
+    Joystick calibration UI
+
+    Tournament mode
