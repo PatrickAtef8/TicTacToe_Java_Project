@@ -95,13 +95,165 @@ graph TD
     G --> A
 ```
 
+
+
+📜 Software Arch
+```mermaid
+
+---
+config:
+  theme: redux-dark
+  fontFamily: Comic Sans MS
+  themeVariables:
+    primaryColor: '#2B0B33'
+    nodeBorder: '#8E44AD'
+    clusterBkg: '#1e1e3d'
+    fontFamily: Comic Sans MS
+---
+flowchart TD
+ subgraph VIEW["🎨 View Layer (resources/com/mycompany/tictactoegame)"]
+        StartMenu[["StartMenuUI.fxml"]]
+        ModeSelection[["ModeSelectionUI.fxml"]]
+        Difficulty[["DifficultySelectionUI.fxml"]]
+        PlayerEntry[["PlayerNameEntry.fxml"]]
+        VirtualKB[["VirtualKeyboard.fxml"]]
+        GameBoard[["GameBoardUI.fxml"]]
+        ScoreBoard[["ScoreBoardUI.fxml"]]
+  end
+ subgraph CONTROLLER["🎮 Controller Layer (controllers/)"]
+        StartCtrl[["StartMenuUIController.java"]]
+        ModeCtrl[["ModeSelectionController.java"]]
+        DiffCtrl[["DifficultySelectionController.java"]]
+        PlayerCtrl[["PlayerNameEntryController.java"]]
+        GameCtrl[["GameBoardController.java"]]
+        ScoreCtrl[["ScoreBoardController.java"]]
+        VKBCtrl[["VirtualKeyboardController.java"]]
+  end
+ subgraph MODEL["🧠 Model Layer (model/)"]
+        GameLogic[["GameLogic.java
+        ---
+        - Board state
+        - Win detection
+        - AI moves"]]
+  end
+ subgraph UTILS["⚙️ Utilities (utils/)"]
+        JoystickReader[["JoystickReader.java
+        ---
+        - Hardware polling"]]
+        JoystickManager[["JoystickManager.java
+        ---
+        - Event routing"]]
+        MusicController[["MusicController.java
+        ---
+        - Plays audio/*.mp3"]]
+  end
+    App[["App.java
+    ---
+    - Starts JavaFX
+    - Initializes JoystickReader
+    - Loads StartMenuUI.fxml"]] --> StartMenu & StartMenu
+    StartMenu --> StartCtrl
+    StartCtrl -- Play button --> ModeSelection
+    ModeSelection --> ModeCtrl
+    ModeCtrl -- PvP selected --> PlayerEntry
+    PlayerEntry --> PlayerCtrl
+    ModeCtrl -- PvC selected --> Difficulty
+    Difficulty --> DiffCtrl
+    DiffCtrl --> PlayerEntry
+    PlayerCtrl -- Needs input --> VirtualKB
+    VirtualKB --> VKBCtrl
+    PlayerCtrl -- Names ready --> GameBoard
+    GameBoard --> GameCtrl
+    GameCtrl -- Game ends --> ScoreBoard
+    ScoreBoard --> ScoreCtrl
+    ScoreCtrl -- Rematch --> GameBoard
+    ScoreCtrl -- Main menu --> StartMenu
+    JoystickReader -- Raw events --> JoystickManager
+    JoystickManager -- Routes to active --> StartCtrl & ModeCtrl & DiffCtrl & PlayerCtrl & GameCtrl & ScoreCtrl & VKBCtrl
+    GameCtrl -- Makes moves --> GameLogic
+    GameLogic -- Game state --> GameCtrl
+    JoystickControllable[["«interface» 
+    JoystickControllable.java
+    ---
+    + handleJoystickMove()
+    + handleJoystickPress()
+    + requiresSecondJoystick()"]] -. implements .-> StartCtrl & ModeCtrl & DiffCtrl & PlayerCtrl & GameCtrl & ScoreCtrl & VKBCtrl
+    style JoystickControllable fill:#5b2576,stroke-dasharray:5 5,stroke:#f39c12
+    style VIEW fill:#6b1e3d,stroke:#e74c3c
+    style CONTROLLER fill:#3d6b1e,stroke:#2ecc71
+    style MODEL fill:#1e3d6b,stroke:#3498db
+    style UTILS fill:#5b2576,stroke:#f39c12
+```
+
+
+
+📜 Hardware sequence diagram
+
+```mermaid
+
+%%{init: {
+  'theme': 'dark',
+  'fontFamily': 'Comic Sans MS',
+  'themeVariables': {
+    'primaryColor': '#2B0B33',
+    'nodeBorder': '#8E44AD',
+    'clusterBkg': '#1e1e3d'
+  }
+}}%%
+
+sequenceDiagram
+    participant Hardware as 🎮 Hardware (js0/js1)
+    participant JoystickReader as JoystickReader
+    participant JoystickManager as JoystickManager
+    participant ActiveController as Active Controller
+    participant UI as Current UI
+
+    Note over Hardware,UI: Initialization Phase
+    App->>JoystickManager: startHotplugDetection(controller)
+    JoystickManager->>Hardware: Check /dev/input/js0, js1
+    Hardware-->>JoystickManager: Connection status
+    JoystickManager->>JoystickReader: Initialize (if connected)
+    JoystickReader->>Hardware: Open input stream
+
+    loop Polling Thread
+        Hardware->>JoystickReader: Raw event bytes
+        JoystickReader->>JoystickReader: Parse event (type=2:axis/1:button)
+        alt Axis Movement
+            JoystickReader->>ActiveController: handleJoystickMove(joystickId, axis, value)
+        else Button Press
+            JoystickReader->>ActiveController: handleJoystickPress(joystickId, button)
+        end
+        ActiveController->>UI: Update visual state
+    end
+
+    Note over Hardware,UI: Hotplug Detection
+    loop Every 1 Second
+        JoystickManager->>Hardware: Check device files
+        alt Joystick Connected
+            Hardware-->>JoystickManager: /dev/input/jsX exists
+            JoystickManager->>UI: Show connection alert
+            JoystickManager->>JoystickReader: Start new reader
+        else Joystick Disconnected
+            Hardware-->>JoystickManager: /dev/input/jsX missing
+            JoystickManager->>UI: Show disconnection alert
+            JoystickManager->>JoystickReader: Stop reader
+        end
+    end
+
+    Note over Hardware,UI: Controller Switching
+    UI->>JoystickManager: updateController(newController)
+    JoystickManager->>JoystickReader: setController(newController)
+    JoystickReader->>ActiveController: All future events routed here
+```
+
+
 👥 Contributors
 
-    Patrick Atef - Game Logic & AI
+    Yasmeen Yasser 
 
-    Yasmeen Yasser - UI/UX Design
-
-    Abdallah Salah - Joystick Integration
+    Patrick Atef 
+    
+    Abdallah Salah 
 
 🔜 Roadmap
 
