@@ -1,37 +1,37 @@
 # TicTacToe Game with Joystick Support
 
-![Game Screenshot](xo.png) 
+![Game Screenshot](xo.png)
 
 ## 🎮 Project Overview
-A modern JavaFX implementation of Tic-Tac-Toe featuring **joystick hardware integration** and AI opponents with multiple difficulty levels. Designed for both casual play and technical demonstration of Java hardware interfacing.
+A JavaFX implementation of Tic-Tac-Toe featuring **joystick hardware integration** and AI opponents with multiple difficulty levels. Combines classic gameplay with modern technical implementation.
 
 ## ✨ Key Features
 
 ### 🖥️ Software Architecture
-- **MVC Pattern** with clean separation of:
-  - **Model**: `GameLogic.java` handles game state and AI
-  - **View**: FXML files for all UI screens
-  - **Controller**: Dedicated controllers for each view
-- **Joystick API**:
-  - Real-time device polling (`/dev/input/js*`)
-  - Hotplug detection
+- **MVC Pattern** implementation:
+  - **Model**: Game state and AI logic (`GameLogic.java`)
+  - **View**: FXML-defined UI screens
+  - **Controller**: Mediates view-model interaction
+- **Joystick Subsystem**:
+  - Direct Linux device file access (`/dev/input/js*`)
+  - Hotplug detection with visual alerts
   - Event routing to active controllers
 
 ### 🎨 UI Components
-| Screen | Description |
-|--------|-------------|
-| **Start Menu** | Game entry point with play/exit options |
-| **Mode Selection** | PvP (local) vs PvC (AI) selection |
-| **Difficulty Selection** | Easy/Medium/Hard AI levels |
-| **Player Setup** | Name entry with virtual keyboard |
-| **Game Board** | Interactive 3x3 grid with joystick support |
-| **Score Board** | Results display with rematch option |
+| Screen | Purpose | Key Features |
+|--------|---------|--------------|
+| **Start Menu** | Game entry | Play/exit options, settings |
+| **Mode Selection** | Game type | PvP vs PvC selection |
+| **Difficulty Selection** | AI configuration | Easy/Medium/Hard levels |
+| **Player Setup** | Player configuration | Name entry with virtual keyboard |
+| **Game Board** | Core gameplay | Interactive 3x3 grid with joystick support |
+| **Score Board** | Results display | Winner announcement, rematch option |
 
 ### 🤖 AI Implementation
-- **Minimax algorithm** with difficulty modifiers:
-  - Easy: Random moves
-  - Medium: Basic strategy
-  - Hard: Unbeatable AI
+- **Minimax algorithm** with adaptive difficulty:
+  - **Easy**: Random valid moves
+  - **Medium**: Strategic moves with occasional mistakes
+  - **Hard**: Perfect minimax implementation
 
 ### 🕹️ Joystick Integration
 ```java
@@ -42,22 +42,28 @@ public interface JoystickControllable {
 }
 ```
 
-   * Supports multiple joysticks
+Features:
 
-   * Visual feedback for device connection/disconnection
+    Multi-joystick support
+
+    Connection/disconnection alerts
+
+    Focus-aware event routing
 
 🛠️ Technical Stack
 
     Java 17 with JavaFX
 
-    Linux input subsystem (/dev/input/js*)
+    Linux input subsystem (evdev interface)
 
     Gradle build system
+
+    Mermaid.js for documentation diagrams
 
 🚀 Getting Started
 Prerequisites
 
-    Linux OS (for joystick support)
+    Linux OS (joystick support requires direct device access)
 
     Java 17 JDK
 
@@ -65,202 +71,79 @@ Prerequisites
 
 Installation
 ``` bash
-
 git clone https://github.com/your-repo/TicToeTacGame.git
 cd TicToeTacGame
 gradle run
 ```
 
-Joystick Setup
+Joystick Configuration
 
-    Connect your gamepad/joystick
+    Connect game controller(s)
 
-    Ensure proper permissions for /dev/input/js*
+    Verify device permissions:
+    bash
+    Copy
 
-    Launch the game - automatic detection enabled
+    sudo chmod a+rw /dev/input/js*
 
-📜 Game Flow
+    Launch game - automatic detection enabled
+
+📜 System Architecture
+Software Structure
 ```mermaid
 
-
-graph TD
-    A[Start Menu] --> B[Mode Selection]
-    B --> C{PvP?}
-    C -->|Yes| D[Player Setup]
-    C -->|No| E[AI Difficulty]
-    E --> D
-    D --> F[Game Board]
-    F --> G[Score Board]
-    G --> F
-    G --> A
-```
-
-
-
-📜 Software Arch
-```mermaid
-
----
-config:
-  theme: redux-dark
-  fontFamily: Comic Sans MS
-  themeVariables:
-    primaryColor: '#2B0B33'
-    nodeBorder: '#8E44AD'
-    clusterBkg: '#1e1e3d'
-    fontFamily: Comic Sans MS
----
+%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#2B0B33'}}}%%
 flowchart TD
- subgraph VIEW["🎨 View Layer (resources/com/mycompany/tictactoegame)"]
-        StartMenu[["StartMenuUI.fxml"]]
-        ModeSelection[["ModeSelectionUI.fxml"]]
-        Difficulty[["DifficultySelectionUI.fxml"]]
-        PlayerEntry[["PlayerNameEntry.fxml"]]
-        VirtualKB[["VirtualKeyboard.fxml"]]
-        GameBoard[["GameBoardUI.fxml"]]
-        ScoreBoard[["ScoreBoardUI.fxml"]]
-  end
- subgraph CONTROLLER["🎮 Controller Layer (controllers/)"]
-        StartCtrl[["StartMenuUIController.java"]]
-        ModeCtrl[["ModeSelectionController.java"]]
-        DiffCtrl[["DifficultySelectionController.java"]]
-        PlayerCtrl[["PlayerNameEntryController.java"]]
-        GameCtrl[["GameBoardController.java"]]
-        ScoreCtrl[["ScoreBoardController.java"]]
-        VKBCtrl[["VirtualKeyboardController.java"]]
-  end
- subgraph MODEL["🧠 Model Layer (model/)"]
-        GameLogic[["GameLogic.java
-        ---
-        - Board state
-        - Win detection
-        - AI moves"]]
-  end
- subgraph UTILS["⚙️ Utilities (utils/)"]
-        JoystickReader[["JoystickReader.java
-        ---
-        - Hardware polling"]]
-        JoystickManager[["JoystickManager.java
-        ---
-        - Event routing"]]
-        MusicController[["MusicController.java
-        ---
-        - Plays audio/*.mp3"]]
-  end
-    App[["App.java
-    ---
-    - Starts JavaFX
-    - Initializes JoystickReader
-    - Loads StartMenuUI.fxml"]] --> StartMenu & StartMenu
-    StartMenu --> StartCtrl
-    StartCtrl -- Play button --> ModeSelection
-    ModeSelection --> ModeCtrl
-    ModeCtrl -- PvP selected --> PlayerEntry
-    PlayerEntry --> PlayerCtrl
-    ModeCtrl -- PvC selected --> Difficulty
-    Difficulty --> DiffCtrl
-    DiffCtrl --> PlayerEntry
-    PlayerCtrl -- Needs input --> VirtualKB
-    VirtualKB --> VKBCtrl
-    PlayerCtrl -- Names ready --> GameBoard
-    GameBoard --> GameCtrl
-    GameCtrl -- Game ends --> ScoreBoard
-    ScoreBoard --> ScoreCtrl
-    ScoreCtrl -- Rematch --> GameBoard
-    ScoreCtrl -- Main menu --> StartMenu
-    JoystickReader -- Raw events --> JoystickManager
-    JoystickManager -- Routes to active --> StartCtrl & ModeCtrl & DiffCtrl & PlayerCtrl & GameCtrl & ScoreCtrl & VKBCtrl
-    GameCtrl -- Makes moves --> GameLogic
-    GameLogic -- Game state --> GameCtrl
-    JoystickControllable[["«interface» 
-    JoystickControllable.java
-    ---
-    + handleJoystickMove()
-    + handleJoystickPress()
-    + requiresSecondJoystick()"]] -. implements .-> StartCtrl & ModeCtrl & DiffCtrl & PlayerCtrl & GameCtrl & ScoreCtrl & VKBCtrl
-    style JoystickControllable fill:#5b2576,stroke-dasharray:5 5,stroke:#f39c12
-    style VIEW fill:#6b1e3d,stroke:#e74c3c
-    style CONTROLLER fill:#3d6b1e,stroke:#2ecc71
-    style MODEL fill:#1e3d6b,stroke:#3498db
-    style UTILS fill:#5b2576,stroke:#f39c12
+    subgraph VIEW["View Layer"]
+        StartMenu --> ModeSelection --> Difficulty --> PlayerEntry --> GameBoard --> ScoreBoard
+        PlayerEntry --> VirtualKB
+    end
+    subgraph CONTROLLER["Controllers"]
+        StartCtrl --> ModeCtrl --> DiffCtrl --> PlayerCtrl --> GameCtrl --> ScoreCtrl
+        PlayerCtrl --> VKBCtrl
+    end
+    JoystickManager -->|Routes events| CONTROLLER
+    GameCtrl -->|Updates| MODEL
 ```
-
-
-
-📜 Hardware sequence diagram
-
+Hardware Sequence
 ```mermaid
-
-%%{init: {
-  'theme': 'dark',
-  'fontFamily': 'Comic Sans MS',
-  'themeVariables': {
-    'primaryColor': '#2B0B33',
-    'nodeBorder': '#8E44AD',
-    'clusterBkg': '#1e1e3d'
-  }
-}}%%
 
 sequenceDiagram
-    participant Hardware as 🎮 Hardware (js0/js1)
-    participant JoystickReader as JoystickReader
-    participant JoystickManager as JoystickManager
-    participant ActiveController as Active Controller
-    participant UI as Current UI
-
-    Note over Hardware,UI: Initialization Phase
-    App->>JoystickManager: startHotplugDetection(controller)
-    JoystickManager->>Hardware: Check /dev/input/js0, js1
-    Hardware-->>JoystickManager: Connection status
-    JoystickManager->>JoystickReader: Initialize (if connected)
-    JoystickReader->>Hardware: Open input stream
-
-    loop Polling Thread
-        Hardware->>JoystickReader: Raw event bytes
-        JoystickReader->>JoystickReader: Parse event (type=2:axis/1:button)
-        alt Axis Movement
-            JoystickReader->>ActiveController: handleJoystickMove(joystickId, axis, value)
+    participant H as Hardware
+    participant JR as JoystickReader
+    participant JM as JoystickManager
+    participant C as Controller
+    
+    loop Polling
+        H->>JR: Raw event bytes
+        JR->>JR: Parse (type, number, value)
+        alt Axis Event
+            JR->>C: handleJoystickMove(id, axis, value)
         else Button Press
-            JoystickReader->>ActiveController: handleJoystickPress(joystickId, button)
-        end
-        ActiveController->>UI: Update visual state
-    end
-
-    Note over Hardware,UI: Hotplug Detection
-    loop Every 1 Second
-        JoystickManager->>Hardware: Check device files
-        alt Joystick Connected
-            Hardware-->>JoystickManager: /dev/input/jsX exists
-            JoystickManager->>UI: Show connection alert
-            JoystickManager->>JoystickReader: Start new reader
-        else Joystick Disconnected
-            Hardware-->>JoystickManager: /dev/input/jsX missing
-            JoystickManager->>UI: Show disconnection alert
-            JoystickManager->>JoystickReader: Stop reader
+            JR->>C: handleJoystickPress(id, button)
         end
     end
-
-    Note over Hardware,UI: Controller Switching
-    UI->>JoystickManager: updateController(newController)
-    JoystickManager->>JoystickReader: setController(newController)
-    JoystickReader->>ActiveController: All future events routed here
 ```
-
-
 👥 Contributors
 
-    Yasmeen Yasser 
+    Yasmeen Yasser - UI/UX Design
 
-    Patrick Atef 
-    
-    Abdallah Salah 
+    Patrick Atef - Game Logic & AI
+
+    Abdallah Salah - Hardware Integration
 
 🔜 Roadmap
 
-    Online multiplayer support
+    Network multiplayer support
 
-    Enhanced AI personality profiles
+    Advanced AI personalities
 
-    Joystick calibration UI
+    Joystick calibration utility
 
-    Tournament mode
+    Tournament mode with score tracking
+
+    Windows joystick support
+
+
+
+
