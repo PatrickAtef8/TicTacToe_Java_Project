@@ -255,12 +255,16 @@ sequenceDiagram
     
     Abdallah Salah 
 
-🔜 Roadmap
 
-    Online multiplayer support
+    
+### 📽️ Demo
 
-    Enhanced AI personality profiles
+▶️ [Watch the video demo](https://drive.google.com/file/d/15bJFfStaaEmpt9rvr1lRCoQAH40jlN8t/view?usp=sharing)
 
-    Joystick calibration UI
+---
 
-    Tournament mode
+### 🔗 Featured on LinkedIn
+
+📢 [Check out our LinkedIn post](https://www.linkedin.com/posts/yasmeen-yasser-mohamed_embeddedabrsystems-androidabrautomotive-iti-activity-7317244917217472513-e2o1?utm_source=share&utm_medium=member_desktop&rcm=ACoAADydX_IBglniXkEy0_S3E5kD-gZezLMhI0E)
+
+
