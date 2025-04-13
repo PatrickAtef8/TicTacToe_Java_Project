@@ -1,6 +1,6 @@
 # TicTacToe Game with Joystick Support
 
-
+![Image](https://github.com/user-attachments/assets/1e68b0e2-db6e-42a0-ac3e-52d95c4262ed)
 
 ## 🎮 Project Overview
 A modern JavaFX implementation of Tic-Tac-Toe featuring **joystick hardware integration** and AI opponents with multiple difficulty levels. Designed for both casual play and technical demonstration of Java hardware interfacing.
